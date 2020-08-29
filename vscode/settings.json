@@ -1,0 +1,465 @@
+{
+  "window.menuBarVisibility": "toggle",
+  "editor.fontFamily": "JetBrains Mono, Fira Code Medium",
+  "editor.fontLigatures": true,
+  "editor.fontWeight": "700",
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "formattingToggle.affects": [
+    "formatOnSave",
+    "formatOnPaste"
+  ],
+  // "editor.lineHeight": 25,
+  "editor.wordWrap": "on",
+  "editor.semanticHighlighting.enabled": "configuredByTheme",
+  "editor.tokenColorCustomizations": {
+    "[Cobalt2]": {
+      /*
+        teal - #9effff
+        dark pink - #ff628c
+        light green - #80ffbb
+        green - #a5ff90
+        dark green - #3ad900
+        light purple - #fb94ff
+      */
+      "comments": "#929292",
+      "keywords": "#ff628c",
+      "numbers": "#95fcc5",
+      //"types": "#9effff",
+      "textMateRules": [
+        {
+          "name": "[GO] - package and import keywords",
+          "scope": [
+            "keyword.package.go",
+            "keyword.import.go"
+          ],
+          "settings": {
+            "foreground": "#9effff"
+          }
+        },
+        {
+          "name": "[GO] - package name and func keyword",
+          "scope": [
+            "keyword.interface.go",
+            "entity.name.package.go",
+            "keyword.function.go"
+          ],
+          "settings": {
+            "foreground": "#ff628c"
+          }
+        },
+        {
+          "name": "[GO] - ellipsis operator",
+          "scope": [
+            "keyword.operator.ellipsis.go"
+          ],
+          "settings": {
+            "foreground": "#fff"
+          }
+        },
+        {
+          "name": "[PYTHON] - Control Flow",
+          "scope": [
+            "keyword.control.flow.python"
+          ],
+          "settings": {
+            "foreground": "#ff628c"
+          }
+        },
+        {
+          "name": "[PYTHON] - def keyword",
+          "scope": [
+            "storage.type.function.python"
+          ],
+          "settings": {
+            "foreground": "#ff628c"
+          }
+        },
+        {
+          "name": "italic",
+          "scope": [
+            "variable.parameter.function-call.python",
+            "meta.function-call.generic.python",
+            "meta.indexed-name.python",
+            "storage.type.string.python",
+            "meta.object-literal.key.js"
+            // "meta.item-access.python",
+            // "meta.member.access.python"
+          ],
+          "settings": {
+            "fontStyle": "italic"
+          }
+        },
+        {
+          "name": "[PYTHON] - def keyword",
+          "scope": [
+            "meta.function-call.arguments.python"
+          ],
+          "settings": {
+            "foreground": "#ff628c"
+          }
+        },
+      ]
+    },
+    "textMateRules": [
+      {
+        "scope": [
+          //following will be in italics (=Pacifico)
+          "comment",
+          "entity.name.type.class", //class names
+          "keyword", //import, export, return…
+          //"support.class.builtin.js", //String, Number, Boolean…, this, super
+          "storage.modifier", //static keyword
+          "storage.type.class.js", //class keyword
+          "storage.type.function.js", // function keyword
+          "storage.type.js", // Variable declarations
+          "keyword.control.import.js", // Imports
+          "keyword.control.from.js", // From-Keyword
+          //"entity.name.type.js", // new … Expression
+          "keyword.control.flow.js", // await
+          "keyword.control.conditional.js", // if
+          "keyword.control.loop.js", // for
+          "keyword.operator.new.js" // new
+        ],
+        "settings": {
+          "fontStyle": "italic"
+        }
+      },
+      {
+        "scope": [
+          //following will be excluded from italics (My theme (Monokai dark) has some defaults I don't want to be in italics)
+          "invalid",
+          "keyword.operator",
+          "constant.numeric.css",
+          "keyword.other.unit.px.css",
+          "constant.numeric.decimal.js",
+          "constant.numeric.json",
+          "entity.name.type.class.js"
+        ],
+        "settings": {
+          "fontStyle": ""
+        }
+      }
+    ]
+  },
+  "editor.tabSize": 4,
+  "editor.renderWhitespace": "all",
+  "workbench.editor.highlightModifiedTabs": true,
+  "sync.gist": "2506dc6503d951dccfc1f32a7145f053",
+  "files.autoSave": "onWindowChange",
+  "explorer.sortOrder": "type",
+  "explorer.openEditors.visible": 1,
+  "editor.cursorStyle": "line",
+  "editor.cursorBlinking": "phase",
+  "debug.showBreakpointsInOverviewRuler": true,
+  "sync.forceUpload": true,
+  //"editor.acceptSuggestionOnEnter": "off",
+  "editor.suggestSelection": "first",
+  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+  "telemetry.enableCrashReporter": false,
+  "telemetry.enableTelemetry": false,
+  "workbench.settings.enableNaturalLanguageSearch": false,
+  "window.zoomLevel": 0,
+  "git.autofetch": true,
+  "terminal.integrated.shell.linux": "/bin/fish",
+  //"goOutliner.extendExplorerTab": true,
+  "[json]": {
+    //"editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2
+  },
+  "[go]": {
+    "editor.tabSize": 4,
+    "editor.insertSpaces": false,
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true,
+      "source.fixAll": false
+    },
+  },
+  "explorer.confirmDragAndDrop": false,
+  "zenMode.hideLineNumbers": false,
+  "zenMode.hideTabs": true,
+  "zenMode.silentNotifications": true,
+  "todo-tree.general.tags": [
+    "TODO",
+    "FIXME",
+    "IMPORTANT",
+    "DEBUG",
+    "HACK",
+    "REVIEW",
+    "NOTE",
+    "TEST",
+    "ALERT"
+  ],
+  "todo-tree.highlights.defaultHighlight": {
+    //"icon": "alert",
+    "type": "text-and-comment",
+    "foreground": "red",
+    "background": "white",
+    //"opacity": 50,
+    "iconColour": "black"
+  },
+  "todo-tree.highlights.customHighlight": {
+    "TODO": {
+      "icon": "checklist",
+      "foreground": "black",
+      "background": "yellow",
+      "iconColour": "#FFD700",
+      "rulerColour": "#FFD700"
+    },
+    "FIXME": {
+      "icon": "flame",
+      "foreground": "#FF8C00",
+      "background": "transparent",
+      "iconColour": "#FF8C00",
+      "rulerColour": "#FF8C00"
+    },
+    "IMPORTANT": {
+      "icon": "issue-opened",
+      "foreground": "#7FFF00",
+      "background": "transparent", //"#65fa56",
+      "iconColour": "#7FFF00",
+      "rulerColour": "#7FFF00"
+    },
+    "DEBUG": {
+      "icon": "bug",
+      "foreground": "#00FFFF",
+      "background": "transparent",
+      "iconColour": "#00FFFF",
+      "rulerColour": "#00FFFF"
+    },
+    "TEST": {
+      "icon": "beaker",
+      "foreground": "#65fa56", //#FF00FF
+      "background": "black", //FF6347
+      "iconColour": "#FF00FF",
+      "rulerColour": "#FF00FF"
+    },
+    "ALERT": {
+      "icon": "alert",
+      "foreground": "#FFD700",
+      "background": "red",
+      "iconColour": "red",
+      "rulerColour": "red"
+    }
+  },
+  "terminal.integrated.cursorStyle": "line",
+  "terminal.integrated.cursorBlinking": true,
+  "breadcrumbs.enabled": true,
+  "window.title": "${dirty}${activeEditorMedium}${separator}${rootName}${separator}Code",
+  "editor.minimap.renderCharacters": false,
+  "editor.minimap.maxColumn": 200,
+  "editor.minimap.showSlider": "always",
+  "editor.smoothScrolling": true,
+  "editor.cursorSmoothCaretAnimation": true,
+  "files.insertFinalNewline": false,
+  "bookmarks.useWorkaroundForFormatters": true,
+  "terraform.indexing": {
+    "enabled": false,
+    "liveIndexing": false,
+    "delay": 500,
+    "exclude": [
+      ".terraform/**/*",
+      "**/.terraform/**/*"
+    ]
+  },
+  "terraform.lintPath": "~/.local/bin/tflint",
+  "terraform.telemetry.enabled": false,
+  "terraform.codelens.enabled": true,
+  "python.jediEnabled": false,
+  "[yaml]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml",
+    "editor.formatOnSave": true
+  },
+  "yaml.customTags": [
+    "!And mapping",
+    "!And scalar",
+    "!And sequence",
+    "!Base64 mapping",
+    "!Base64 scalar",
+    "!Base64 sequence",
+    "!Cidr mapping",
+    "!Cidr scalar",
+    "!Cidr sequence",
+    "!Equals mapping",
+    "!Equals scalar",
+    "!Equals sequence",
+    "!FindInMap mappping",
+    "!FindInMap scalar",
+    "!FindInMap sequence",
+    "!GetAtt mapping",
+    "!GetAtt scalar",
+    "!GetAtt sequence",
+    "!GetAZs mapping",
+    "!GetAZs scalar",
+    "!GetAZs sequence",
+    "!If mapping",
+    "!If scalar",
+    "!If sequence",
+    "!ImportValue mapping",
+    "!ImportValue scalar",
+    "!ImportValue sequence",
+    "!Join mapping",
+    "!Join scalar",
+    "!Join sequence",
+    "!Not mapping",
+    "!Not scalar",
+    "!Not sequence",
+    "!Or mapping",
+    "!Or scalar",
+    "!Or sequence",
+    "!Ref mapping",
+    "!Ref scalar",
+    "!Ref sequence",
+    "!Select mapping",
+    "!Select scalar",
+    "!Select sequence",
+    "!Split mapping",
+    "!Split scalar",
+    "!Split sequence",
+    "!Sub mapping",
+    "!Sub scalar",
+    "!Sub sequence",
+    "!And",
+    "!If",
+    "!Not",
+    "!Equals",
+    "!Or",
+    "!FindInMap",
+    "!Base64",
+    "!Join",
+    "!Cidr",
+    "!Ref",
+    "!Sub",
+    "!GetAtt",
+    "!GetAZs",
+    "!ImportValue",
+    "!Select",
+    "!Split"
+  ],
+  "yaml.validate": false,
+  "yaml.format.enable": true,
+  //"cfnLint.validateUsingJsonSchema": false,
+  "diffEditor.ignoreTrimWhitespace": false,
+  //"python.pythonPath": "/usr/bin/python2",
+  "clipboard-manager.snippet.enabled": false,
+  // "indentRainbow.colors": [
+  //     // "rgba(25,255,64,0.07)",
+  //     // "rgba(145,250,122,0.07)",
+  //     // "rgba(255,127,255,0.07)",
+  //     // "rgba(79,236,236,0.07)"
+  //     "rgba(255,255,64,0.07)",
+  //     "rgba(127,255,127,0.07)",
+  //     "rgba(255,127,255,0.07)",
+  //     "rgba(79,236,236,0.07)"
+  // ],
+  "indentRainbow.ignoreErrorLanguages": [
+    "*"
+  ],
+  "diffEditor.renderSideBySide": true,
+  "git.showPushSuccessNotification": true,
+  //"peacock.favoriteColors": [
+  //  {
+  //    "name": "Angular Red",
+  //    "value": "#b52e31"
+  //  },
+  //  {
+  //    "name": "Auth0 Orange",
+  //    "value": "#eb5424"
+  //  },
+  //  {
+  //    "name": "Azure Blue",
+  //    "value": "#007fff"
+  //  },
+  //  {
+  //    "name": "C# Purple",
+  //    "value": "#68217A"
+  //  },
+  //  {
+  //    "name": "Gatsby Purple",
+  //    "value": "#639"
+  //  },
+  //  {
+  //    "name": "Go Cyan",
+  //    "value": "#5dc9e2"
+  //  },
+  //  {
+  //    "name": "Java Blue-Gray",
+  //    "value": "#557c9b"
+  //  },
+  //  {
+  //    "name": "JavaScript Yellow",
+  //    "value": "#f9e64f"
+  //  },
+  //  {
+  //    "name": "Mandalorian Blue",
+  //    "value": "#1857a4"
+  //  },
+  //  {
+  //    "name": "Node Green",
+  //    "value": "#215732"
+  //  },
+  //  {
+  //    "name": "React Blue",
+  //    "value": "#00b3e6"
+  //  },
+  //  {
+  //    "name": "Something Different",
+  //    "value": "#832561"
+  //  },
+  //  {
+  //    "name": "Vue Green",
+  //    "value": "#42b883"
+  //  }
+  //],
+  "cfnLint.validateUsingJsonSchema": false,
+  "workbench.colorCustomizations": {},
+  "workbench.activityBar.visible": true,
+  "editor.minimap.enabled": true,
+  "[markdown]": {
+    "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+  },
+  "todo-tree.tree.showScanModeButton": false,
+  "workbench.sideBar.location": "right",
+  "workbench.editor.titleScrollbarSizing": "default",
+  "liveServer.settings.donotShowInfoMsg": true,
+  "terminal.integrated.fontFamily": "Fira Code Medium",
+  "files.associations": {
+    "*.template": "yaml"
+  },
+  "python.languageServer": "Pylance",
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.python"
+  },
+  "workbench.iconTheme": "material-icon-theme",
+  "prettier.singleQuote": true,
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "miramac.node.clearOutput": true,
+  "miramac.node.showInfo": true,
+  "miramac.node.showStdout": true,
+  "miramac.node.showStderr": true,
+  "aws.telemetry": false,
+  //"aws.profile": "profile:property-finder",
+  "[javascript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "extensions.showRecommendationsOnlyOnDemand": true,
+  "files.exclude": {
+    "**/.idea": true,
+    "**/.terraform": true,
+    "**/.vscode": true,
+    "**/node_modules": true
+  },
+  "editor.fontSize": 16,
+  "terminal.integrated.enableBell": true,
+  "terminal.integrated.fontSize": 16,
+  "python.showStartPage": false,
+  "python.venvPath": "~/.virtualenvs",
+  "files.trimTrailingWhitespace": true,
+  "prettier.eslintIntegration": true,
+  "workbench.colorTheme": "Cobalt2",
+  "go.formatTool": "goimports",
+  "go.lintTool": "revive",
+}
