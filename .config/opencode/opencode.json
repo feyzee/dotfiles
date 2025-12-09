@@ -1,0 +1,23 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "theme": "system",
+  "formatter": {
+    "terraform": {
+      "command": ["terraform", "fmt"],
+      "extensions": [".tf", ".hcl", ".tfvars"]
+
+    }
+  },
+  "permission": {
+    "edit": "allow",
+    "bash": {
+      "*": "ask",
+      "terraform *": "deny",
+      "pwd": "allow",
+      "ls *": "allow"
+    },
+    "webfetch": "ask",
+    "doom_loop": "ask",
+    "external_directory": "ask"
+  }
+}
