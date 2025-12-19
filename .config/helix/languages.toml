@@ -1,0 +1,28 @@
+[[language]]
+name = "python"
+language-servers = [ "ruff", "pylsp" ]
+auto-format = true
+formatter = { command = "ruff", args = ["format", "--line-length", "88", "-"] }
+
+[language-server.ruff]
+command = "ruff"
+args = ["server", "--preview"]
+
+[[language]]
+name = "go"
+auto-format = true
+
+[[language]]
+name = "json"
+language-servers = ["vscode-json-language-server"]
+formatter = { command = 'npx', args = ["prettier", "--parser", "json"] }
+auto-format = true
+
+[[language]]
+name = "lua"
+auto-format = true
+
+[[language]]
+name = "hcl"
+auto-format = true
+formatter = { command = "terraform", args = ["fmt"] }
