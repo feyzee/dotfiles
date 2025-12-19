@@ -1,11 +1,10 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "theme": "system",
+  "theme": "tokyonight",
   "formatter": {
     "terraform": {
       "command": ["terraform", "fmt"],
       "extensions": [".tf", ".hcl", ".tfvars"]
-
     }
   },
   "permission": {
@@ -19,5 +18,11 @@
     "webfetch": "ask",
     "doom_loop": "ask",
     "external_directory": "ask"
+  },
+  "tui": {
+    "scroll_speed": 3,
+    "scroll_acceleration": {
+      "enabled": true
+    }
   }
 }
