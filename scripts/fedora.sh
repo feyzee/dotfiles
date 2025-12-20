@@ -6,11 +6,6 @@ configure_dnf_repos()
 
 install_dnf_packages()
 {
-    if [ ! -f ./pkg/dnf ]; then
-        echo "List of packages to install not found. Stopped installing fedora packages"
-        return
-    fi
-
     source ./pkg/dnf
     echo "Installing packages using DNF"
 
@@ -20,11 +15,6 @@ install_dnf_packages()
 
 setup_flatpak()
 {
-    if [ ! -f ./pkg/flatpak ]; then
-        echo "List of packages to install not found. Stopped installing flatpak packages"
-        return
-    fi
-
     source ./pkg/flatpak
     echo "Installing packages using Flatpak"
 

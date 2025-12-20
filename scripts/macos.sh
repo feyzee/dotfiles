@@ -15,11 +15,6 @@ install_brew_packages()
         NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     fi
 
-    if [ ! -f ./pkg/Brewfile ]; then
-        echo "Brewfile not found. Brew packages not installed..."
-        return
-    fi
-
     echo "Installing packages using homebrew Brewfile..."
 
     brew update && brew upgrade

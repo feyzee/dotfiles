@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 npm_packages=(
   prettier
 )

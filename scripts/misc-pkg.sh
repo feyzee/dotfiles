@@ -13,11 +13,6 @@ install_rust()
         exit 1
     fi
 
-    if [ ! -f ./pkg/rust ]; then
-        echo "Components list to install not found. Stopped installing"
-        return
-    fi
-
     source ./pkg/rust
     echo "Installing rust components"
     rustup component add ${rustup_components[@]}
@@ -25,11 +20,6 @@ install_rust()
 
 install_cargo_packages()
 {
-    if [ ! -f ./pkg/rust ]; then
-        echo "List of packages to install not found. Stopped installing rust packages"
-        return
-    fi
-
     source ./pkg/rust
     echo "Installing packages using Cargo"
 
@@ -38,11 +28,6 @@ install_cargo_packages()
 
 install_go_packages()
 {
-    if [ ! -f ./pkg/golang ]; then
-        echo "List of packages to install not found. Stopped installing Go packages"
-        return
-    fi
-
     source ./pkg/golang
     echo "Installing packages using Cargo"
 
@@ -51,11 +36,6 @@ install_go_packages()
 
 install_npm_packages()
 {
-    if [ ! -f ./pkg/npm ]; then
-        echo "List of packages to install not found. Stopped installing NPM packages"
-        return
-    fi
-
     source ./pkg/npm
     echo "Installing packages using Cargo"
 
