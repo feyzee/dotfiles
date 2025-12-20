@@ -56,7 +56,12 @@ install_git()
 
 configure_dotfiles()
 {
-    echo "Installing stow"
+    if ! [ -x "$(command -v git)" ]; then
+        echo 'Stow is not installed. Exiting...'
+        exit 1
+    fi
+
+    stow .
 }
 
 configure_firefox()

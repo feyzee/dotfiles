@@ -1,6 +1,6 @@
 #!/bin/bash
 
 
-npm-packages=(
+npm_packages=(
   prettier
 )

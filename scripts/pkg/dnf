@@ -17,6 +17,7 @@ dnf_packages=(
     fd-find
     fish
     fira-code-fonts
+    flatpak
     fzf
     git
     gitui

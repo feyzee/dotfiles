@@ -1,0 +1,11 @@
+#!/bin/bash
+
+rustup_components=(
+    rust-analyzer
+    rust-docs
+)
+
+cargo_packages=(
+    selene
+    stylua
+)

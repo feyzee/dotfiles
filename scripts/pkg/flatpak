@@ -19,15 +19,3 @@ flatpak_packages=(
     org.libreoffice.LibreOffice
     org.mozilla.Thunderbird
 )
-
-setup_flatpak()
-{
-    if ! [ -x "$(command -v flatpak)" ]; then
-        echo 'Flatpak is not installed. Instaling now...' >&2
-        sudo dnf install -y flatpak
-    fi
-
-    flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-    flatpak update -y
-    flatpak install flathub ${flatpak_packages[@]} -y
-}
