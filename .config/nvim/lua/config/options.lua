@@ -66,6 +66,7 @@ vim.o.sessionoptions = "buffers,curdir,tabpages,winsize,help,globals,skiprtp,fol
 vim.filetype.add({
   extension = {
     tfstate = "json",
+    tofu = "opentofu",
   },
   filename = {
     [".dockerignore"] = "gitignore",

@@ -68,7 +68,7 @@ local servers = {
   "lua_ls",
   "ruff",
   "rust_analyzer",
-  "terraformls",
+  -- "tofu_ls",
   "tflint",
   "ts_ls",
   "yamlls",
