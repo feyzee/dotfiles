@@ -12,10 +12,10 @@ set -Ux FZF_DEFAULT_OPTS '-m --height=70% --preview="bat --theme 1337 {}" --prev
 alias python python3
 alias py python
 alias cp "cp -pr"
-alias ls exa
-alias lsa "exa --long --all --git --header"
-alias lst "exa --long --git --header --tree"
-alias lsat "exa --long --all --git --header --tree"
+alias ls eza
+alias lsa "eza --long --all --git --header"
+alias lst "eza --long --git --header --tree"
+alias lsat "eza --long --all --git --header --tree"
 alias cat bat
 alias rmrf "rm -rf"
 alias grep rg
@@ -79,7 +79,17 @@ abbr j2y "wl-paste | yq eval -P"
 abbr y2jcp "wl-paste | yq eval -j | jq -c | wl-copy"
 abbr j2ycp "wl-paste | yq eval -P | wcp"
 
+# fish related configs
+fish_config theme choose Catppuccin\ Macchiato
+# fish_config theme save "Catppuccin Macchiato"
+
+# add folders to $PATH
+fish_add_path ~/go/bin
+fish_add_path ~/.local/bin
+fish_add_path ~/.cargo/bin
+fish_add_path /opt/homebrew/bin
+fish_add_path /usr/local/go/bin
+fish_add_path /usr/local/bin
+
 # load zoxide
 zoxide init fish | source
-
-fish_config theme choose Catppuccin\ Macchiato
