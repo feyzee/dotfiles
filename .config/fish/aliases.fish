@@ -1,4 +1,3 @@
-alias py python
 alias cp "cp -pr"
 alias ls eza
 alias lsa "eza --classify --color --long --all --git --header"
@@ -12,6 +11,9 @@ alias fd "fd -Hi" # hidden + ignore case
 alias ping prettyping
 alias vim nvim
 alias n nvim
+alias g git
+alias lg lazygit
+alias py python
 alias k kubectl
 alias steam "flatpak run com.valvesoftware.Steam"
 alias protontricks "flatpak run --command=protontricks com.valvesoftware.Steam --no-runtime"

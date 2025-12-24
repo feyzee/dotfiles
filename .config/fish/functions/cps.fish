@@ -9,5 +9,4 @@ function cps --description "Clipboard paste"
         case '*'
             echo "OS not supported"
     end
-    return 1
 end

@@ -9,5 +9,4 @@ function ccp --description "Clipboard copy"
         case '*'
             echo "OS not supported"
     end
-    return 1
 end
