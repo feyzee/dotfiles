@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# TODO: configure (nerd) fonts, install gnome extensions, configure gnome settings via dconf or gnome-tweaks,
+# fastestmirror and other dnf conf, enable copr's, ghostty
+
+
 main()
 {
     while getopts "init" init; do

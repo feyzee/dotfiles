@@ -25,6 +25,7 @@ dnf_packages=(
     golang
     google-noto-fonts-all
     grafana
+    gnome-tweaks
     helix
     helm
     htop
