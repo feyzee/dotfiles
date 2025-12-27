@@ -1,7 +1,5 @@
--- Augroups once for better performance
+-- Augroups
 local LspAttachGroup = vim.api.nvim_create_augroup("lsp-attach", { clear = true })
-local LspHighlightGroup = vim.api.nvim_create_augroup("lsp-highlight", { clear = true })
-local LastHighlight = {}
 
 -- LSP related
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -16,67 +14,22 @@ vim.api.nvim_create_autocmd("LspAttach", {
     if client:supports_method("textDocument/inlayHint") then
       vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
 
-      vim.keymap.set("n", "<leader>ih", function()
-        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }), { bufnr = event.buf })
-      end, { desc = "Toggle Inlay Hints", buffer = event.buf })
-    end
-
-    -- Enable document highlight if supported
-    if client:supports_method("textDocument/documentHighlight") then
-      -- Clear existing highlight autocmds for this buffer to prevent duplication
-      -- if multiple clients attach to the same buffer
-      vim.api.nvim_clear_autocmds({ group = LspHighlightGroup, buffer = event.buf })
-
-      vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-        buffer = event.buf,
-        group = LspHighlightGroup,
-        callback = function()
-          local current_pos = vim.api.nvim_win_get_cursor(0)
-          local pos_key = current_pos[1] .. ":" .. current_pos[2]
-          -- Only highlight if position changed
-          if LastHighlight[event.buf] ~= pos_key then
-            vim.lsp.buf.document_highlight()
-            LastHighlight[event.buf] = pos_key
-          end
-        end,
-      })
-
-      vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-        buffer = event.buf,
-        group = LspHighlightGroup,
-        callback = vim.lsp.buf.clear_references,
-      })
+      if not vim.b[event.buf].lsp_inlay_keymap_set then
+        vim.keymap.set("n", "<leader>ih", function()
+          vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }), { bufnr = event.buf })
+        end, { desc = "Toggle Inlay Hints", buffer = event.buf })
+        vim.b[event.buf].lsp_inlay_keymap_set = true
+      end
     end
 
     -- Trigger codelens manually
     if client:supports_method("textDocument/codeLens") then
-      vim.keymap.set("n", "<leader>cl", function()
-        vim.lsp.codelens.refresh({ bufnr = event.buf })
-      end, { desc = "Refresh CodeLens", buffer = event.buf })
-    end
-
-    -- Prefer LSP folding if client supports it
-    local win_id = vim.api.nvim_get_current_win()
-    if client:supports_method("textDocument/foldingRange") then
-      for _, win in ipairs(vim.fn.win_findbuf(event.buf)) do
-        if not vim.w[win_id].original_foldexpr then
-          vim.w[win_id].original_foldexpr = vim.api.nvim_get_option_value("foldexpr", { win = win_id })
-        end
-
-        vim.api.nvim_set_option_value("foldexpr", "v:lua.vim.lsp.foldexpr()", { win = win_id })
+      if not vim.b[event.buf].lsp_codelens_keymap_set then
+        vim.keymap.set("n", "<leader>cl", function()
+          vim.lsp.codelens.refresh({ bufnr = event.buf })
+        end, { desc = "Refresh CodeLens", buffer = event.buf })
+        vim.b[event.buf].lsp_codelens_keymap_set = true
       end
-
-      vim.api.nvim_create_autocmd("BufWinEnter", {
-        buffer = event.buf,
-        group = vim.api.nvim_create_augroup("LspFolding-" .. event.buf, { clear = true }),
-        callback = function()
-          local win = vim.api.nvim_get_current_win()
-          if not vim.w[win_id].original_foldexpr then
-            vim.w[win_id].original_foldexpr = vim.wo[win_id].foldexpr
-          end
-          vim.wo[win_id].foldexpr = "v:lua.vim.lsp.foldexpr()"
-        end,
-      })
     end
 
     -- Disable semantic tokens for large files
@@ -91,16 +44,13 @@ vim.api.nvim_create_autocmd("LspDetach", {
   group = vim.api.nvim_create_augroup("LspDetach", { clear = true }),
   callback = function(event)
     vim.lsp.buf.clear_references()
-    LastHighlight[event.buf] = nil
-    pcall(vim.api.nvim_clear_autocmds, { group = LspHighlightGroup, buffer = event.buf })
-    pcall(vim.api.nvim_clear_autocmds, { group = "LspFolding-" .. event.buf, buffer = event.buf })
-    pcall(vim.lsp.inlay_hint.enable, false, { bufnr = event.buf })
 
-    for _, win in ipairs(vim.fn.win_findbuf(event.buf)) do
-      if vim.w[win].original_foldexpr then
-        vim.api.nvim_set_option_value("foldexpr", vim.w[win].original_foldexpr, { win = win })
-        vim.w[win].original_foldexpr = nil
-      end
+    local remaining_clients = vim.lsp.get_clients({ bufnr = event.buf })
+    if #remaining_clients == 0 then
+      pcall(vim.lsp.inlay_hint.enable, false, { bufnr = event.buf })
+      -- Clean up buffer-local keymap tracking variables
+      vim.b[event.buf].lsp_inlay_keymap_set = nil
+      vim.b[event.buf].lsp_codelens_keymap_set = nil
     end
   end,
 })
