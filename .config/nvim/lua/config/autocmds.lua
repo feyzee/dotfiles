@@ -32,10 +32,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
       end
     end
 
-    -- Disable semantic tokens for large files
-    if vim.api.nvim_buf_line_count(event.buf) > 5000 then
-      vim.lsp.semantic_tokens.stop(event.buf, client.id)
-    end
+    -- Disable semantic tokens globally to prevent memory leaks
+    vim.lsp.semantic_tokens.stop(event.buf, client.id)
   end,
 })
 

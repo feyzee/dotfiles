@@ -49,12 +49,7 @@ vim.lsp.config("*", {
         lineFoldingOnly = true,
       },
     },
-    workspace = {
-      fileOperations = {
-        didRename = true,
-        willRename = true,
-      },
-    },
+    workspace = {},
   },
 })
 
