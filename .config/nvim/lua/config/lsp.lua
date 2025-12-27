@@ -1,10 +1,5 @@
 -- Diagnostic Configs
-local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
-
-for type, icon in pairs(signs) do
-  local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-end
+local signs = { Error = " ", Warn = " ", Hint = " ", Information = " " }
 
 vim.diagnostic.config({
   float = {
@@ -34,23 +29,26 @@ vim.diagnostic.config({
 
 -- Global LSP configuration for all servers
 vim.lsp.config("*", {
-  capabilities = {
-    textDocument = {
-      completion = {
-        completionItem = {
-          snippetSupport = true,
-          resolveSupport = {
-            properties = { "documentation", "detail", "additionalTextEdits" },
-          },
-        },
-      },
-      foldingRange = {
-        dynamicRegistration = false,
-        lineFoldingOnly = true,
-      },
-    },
-    workspace = {},
-  },
+  capabilities = (function()
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+
+    -- Enhance completion
+    capabilities.textDocument.completion.completionItem.snippetSupport = true
+    capabilities.textDocument.completion.completionItem.resolveSupport = {
+      properties = { "documentation", "detail", "additionalTextEdits" },
+    }
+
+    -- Disable folding range globally (using treesitter instead)
+    capabilities.textDocument.foldingRange = nil
+
+    -- Enable workspace file operations
+    capabilities.workspace.fileOperations = {
+      didRename = true,
+      willRename = true,
+    }
+
+    return capabilities
+  end)(),
 })
 
 -- List of language servers to enable
