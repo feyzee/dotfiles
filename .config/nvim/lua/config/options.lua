@@ -24,10 +24,9 @@ vim.opt.smartcase = true
 vim.opt.incsearch = true
 vim.opt.hidden = true
 vim.opt.updatetime = 1000
-vim.opt.signcolumn = "yes"
+vim.opt.signcolumn = "auto"
 vim.opt.termguicolors = true
 vim.opt.hlsearch = false
-vim.opt.cursorline = true
 
 -- splits
 vim.opt.splitbelow = true
