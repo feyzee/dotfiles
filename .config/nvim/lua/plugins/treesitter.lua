@@ -3,44 +3,47 @@
 --   - nvim-treesitter
 --   - mini.ai
 
+local languages = {
+  "bash",
+  "comment",
+  "csv",
+  "css",
+  "dockerfile",
+  "go",
+  "hcl",
+  "helm",
+  "html",
+  "javascript",
+  "json",
+  "lua",
+  "markdown",
+  "markdown_inline",
+  "python",
+  "regex",
+  "rust",
+  "terraform",
+  "typescript",
+  "yaml",
+  "gowork",
+  "gomod",
+  "gosum",
+  "sql",
+  "gotmpl",
+  "comment",
+}
+
 return {
   {
     "nvim-treesitter/nvim-treesitter",
     event = "BufRead",
+    pattern = languages,
     build = ":TSUpdate",
     --- @module "nvim-treesitter.configs"
     --- @type TSConfig
     --- @diagnostic disable-next-line: missing-fields
 
     opts = {
-      ensure_installed = {
-        "bash",
-        "comment",
-        "csv",
-        "css",
-        "dockerfile",
-        "go",
-        "hcl",
-        "helm",
-        "html",
-        "javascript",
-        "json",
-        "lua",
-        "markdown",
-        "markdown_inline",
-        "python",
-        "regex",
-        "rust",
-        "terraform",
-        "typescript",
-        "yaml",
-        "gowork",
-        "gomod",
-        "gosum",
-        "sql",
-        "gotmpl",
-        "comment",
-      },
+      ensure_installed = languages,
 
       highlight = { enable = true },
       indent = { enable = true },
