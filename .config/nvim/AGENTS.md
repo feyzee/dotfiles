@@ -303,6 +303,11 @@ This section covers essential tools and modern CLI utilities for maintaining cod
   end
   ```
 
+### Web Content Fetching
+- When fetching content from GitHub using webfetch, use raw content URLs instead of blob URLs for better accessibility
+- Convert blob URLs to raw URLs by replacing `github.com/user/repo/blob/branch/file` with `raw.githubusercontent.com/user/repo/branch/file`
+- Example: `https://github.com/codecrafters-io/build-your-own-x/blob/master/README.md` → `https://raw.githubusercontent.com/codecrafters-io/build-your-own-x/master/README.md`
+
 ## Security Considerations
 
 ### Avoid Secrets in Configuration
