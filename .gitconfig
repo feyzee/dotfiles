@@ -1,10 +1,29 @@
+[init]
+	defaultBranch = main
+
+[core]
+    pager = delta
+
+; [difftool]
+;     prompt = no
+
+[interactive]
+    diffFilter = delta --color-only
+
+[merge]
+    conflictStyle = zdiff3
+
+[delta]
+    theme = ansi
+    features = decorations
+    navigate = true
+    side-by-side = true 
+
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-[user]
-	name = Faizal Musthafa
-	email = 11005389+feyzee@users.noreply.github.com
-[init]
-	defaultBranch = main
+
+[url "ssh://git@github.com"]
+	insteadOf = https://github.com
