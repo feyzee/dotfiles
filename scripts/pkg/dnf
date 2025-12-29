@@ -21,6 +21,7 @@ dnf_packages=(
     fzf
     git
     gitui
+    git-delta
     glances
     golang
     google-noto-fonts-all
