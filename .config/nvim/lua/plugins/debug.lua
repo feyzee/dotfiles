@@ -5,6 +5,7 @@
 return {
   {
     "mfussenegger/nvim-dap",
+    enabled = false,
     dependencies = {
       "rcarriga/nvim-dap-ui",
       "leoluz/nvim-dap-go",

@@ -1,6 +1,7 @@
 return {
   {
     "folke/sidekick.nvim",
+    enabled = false,
     opts = {
       -- add any options here
       cli = {
@@ -96,6 +97,7 @@ return {
   },
   {
     "sudo-tee/opencode.nvim",
+    enabled = false,
     config = function()
       require("opencode").setup({})
     end,
