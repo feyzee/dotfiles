@@ -38,4 +38,3 @@ keybind = ctrl+shift+|=new_split:right
 keybind = ctrl+shift+left_bracket=goto_split:previous
 keybind = ctrl+shift+right_bracket=goto_split:next
 keybind = ctrl+shift+r=prompt_surface_title
-keybind = shift+enter=text:\x1b\r
