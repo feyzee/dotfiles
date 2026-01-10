@@ -8,16 +8,19 @@
     }
   },
   "permission": {
-    "edit": "allow",
     "bash": {
       "*": "ask",
       "terraform *": "deny",
       "pwd": "allow",
       "ls *": "allow"
     },
-    "webfetch": "ask",
     "doom_loop": "ask",
-    "external_directory": "ask"
+    "edit": "allow",
+    "external_directory": "ask",
+    "question": "allow",
+    "skill": "ask",
+    "todoread": "allow",
+    "webfetch": "ask"
   },
   "tui": {
     "scroll_speed": 3,

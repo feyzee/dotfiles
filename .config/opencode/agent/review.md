@@ -1,6 +1,8 @@
 ---
 description: Code review without edits
 mode: subagent
+model: opencode/minimax-m2.1-free
+temperature: 0.1
 permission:
   edit: deny
   bash: ask
