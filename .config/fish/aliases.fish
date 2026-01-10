@@ -8,7 +8,7 @@ alias rmrf "rm -rf"
 alias grep rg
 alias find fd
 alias fd "fd -Hi" # hidden + ignore case
-alias ping prettyping
+# alias ping prettyping
 alias vim nvim
 alias n nvim
 alias g git
@@ -20,7 +20,14 @@ alias steam "flatpak run com.valvesoftware.Steam"
 alias protontricks "flatpak run --command=protontricks com.valvesoftware.Steam --no-runtime"
 # alias env ANTHROPIC_BASE_URL=https://api.z.ai/api/anthropic ANTHROPIC_AUTH_TOKEN="$ZAI_API_KEY" ANTHROPIC_DEFAULT_HAIKU_MODEL=glm-4.5-air ANTHROPIC_DEFAULT_SONNET_MODEL=glm-4.7 ANTHROPIC_DEFAULT_OPUS_MODEL=glm-4.7 claude "$argv"
 
+# Recursively delete `.DS_Store` files
+alias cleanup_dsstore="find . -name '*.DS_Store' -type f -ls -delete"
+
 # abbreviations
+abbr gst "g status"
+abbr gpl "g pull origin"
+abbr gps "g push origin"
+
 # podman + docker
 abbr pds "podman start"
 abbr pdst "podman stop"
@@ -70,6 +77,3 @@ abbr y2j "wl-paste | yq eval -j | jq -c"
 abbr j2y "wl-paste | yq eval -P"
 abbr y2jcp "wl-paste | yq eval -j | jq -c | wl-copy"
 abbr j2ycp "wl-paste | yq eval -P | wcp"
-
-# Recursively delete `.DS_Store` files
-alias cleanup_dsstore="find . -name '*.DS_Store' -type f -ls -delete"

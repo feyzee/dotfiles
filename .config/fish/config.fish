@@ -11,9 +11,12 @@ set -Ux FZF_DEFAULT_OPTS '-m --height=70% --preview="bat --theme 1337 {}" --prev
 fish_config theme choose Catppuccin\ Macchiato
 
 # add folders to $PATH
-fish_add_path ~/go/bin
 fish_add_path ~/.local/bin
+fish_add_path ~/.local/bin/npm/bin
+fish_add_path ~/.bun/bin
+fish_add_path ~/go/bin
 fish_add_path ~/.cargo/bin
+fish_add_path ~/.opencode/bin
 fish_add_path /opt/homebrew/bin
 fish_add_path /usr/local/go/bin
 fish_add_path /usr/local/bin
@@ -39,3 +42,7 @@ source ~/.config/fish/aliases.fish
 
 # load zoxide
 zoxide init fish | source
+
+# bun
+set --export BUN_INSTALL "$HOME/.bun"
+set --export PATH $BUN_INSTALL/bin $PATH
