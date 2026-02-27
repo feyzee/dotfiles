@@ -82,20 +82,19 @@ keymap("n", "<S-Left>", ":vertical resize +2<CR>", opts)
 keymap("n", "<A-Up>", "<Esc>:m .-2<CR>==", opts)
 keymap("n", "<A-Down>", "<Esc>:m .+1<CR>==", opts)
 
--- Neotree
-keymap("n", "<leader>b", ":Neotree toggle<cr>", opts)
-keymap("n", "<leader>es", function()
-  vim.cmd("Neotree dir=" .. vim.fn.getcwd())
-end, { desc = "Explorer (Root Dir)" })
+-- Neotree removed - using mini.files instead (bound to <leader>bf)
+
+-- Mini.files
+-- keymap("n", "<leader>e", require("mini.files").open(vim.api.nvim_buf_get_name(0), true), opts)
 
 -- Terraform
 keymap("n", "<leader>tfv", ":!terraform validate<CR>", opts)
 keymap("n", "<leader>tfmt", ":!terraform fmt<CR>", opts)
 
 -- Snacks
-keymap("n", "<leader>.", function()
-  Snacks.scratch()
-end, { desc = "Toggle Scratch Buffer" })
+-- keymap("n", "<leader>.", function()
+--   Snacks.scratch()
+-- end, { desc = "Toggle Scratch Buffer" })
 
 -- Tabs
 keymap("n", "<leader>tr", function()

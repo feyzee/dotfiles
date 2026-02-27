@@ -4,43 +4,8 @@
 
 return {
   {
-    "ibhagwan/fzf-lua",
-    opts = {
-      previewers = {
-        builtin = {
-          syntax_limit_b = 1024 * 100, -- 100KB
-        },
-      },
-      grep_curbuf = {
-        winopts = {
-          height = 0.8,
-          width = 0.5,
-          backdrop = 75,
-          preview = {
-            layout = "vertical",
-            horizontal = "right:50%",
-            vertical = "down:60%",
-          },
-        },
-      },
-      git = {
-        branches = {
-          winopts = {
-            height = 0.8,
-            width = 0.5,
-            backdrop = 75,
-            preview = {
-              layout = "vertical",
-              horizontal = "right:50%",
-              vertical = "down:60%",
-            },
-          },
-        },
-      },
-    },
-  },
-  {
     "folke/flash.nvim",
+    enabled = true,
     event = "VeryLazy",
     vscode = true,
     ---@type Flash.Config
