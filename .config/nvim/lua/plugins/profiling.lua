@@ -1,6 +1,7 @@
 return {
   {
     "folke/snacks.nvim",
+    enabled = false,
     opts = function()
       -- Toggle the profiler
       Snacks.toggle.profiler():map("<leader>pp")
@@ -16,13 +17,5 @@ return {
         desc = "Profiler Scratch Bufer",
       },
     },
-  },
-  -- optional lualine component to show captured events
-  -- when the profiler is running
-  {
-    "nvim-lualine/lualine.nvim",
-    opts = function(_, opts)
-      table.insert(opts.sections.lualine_x, Snacks.profiler.status())
-    end,
   },
 }

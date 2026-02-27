@@ -5,6 +5,7 @@
 return {
   {
     "nvim-neotest/neotest",
+    enabled = false,
     dependencies = {
       "nvim-neotest/nvim-nio",
       "nvim-lua/plenary.nvim",
@@ -22,7 +23,10 @@ return {
       output = { open_on_run = true },
     },
     config = function(_, opts)
-      local neotest_ns = vim.api.nvim_create_namespace("neotest")
+      if not vim.g.neotest_ns then
+        vim.g.neotest_ns = vim.api.nvim_create_namespace("neotest")
+      end
+      local neotest_ns = vim.g.neotest_ns
       vim.diagnostic.config({
         virtual_text = {
           format = function(diagnostic)

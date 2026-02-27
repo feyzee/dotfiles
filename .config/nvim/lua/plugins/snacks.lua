@@ -3,6 +3,7 @@
 
 return {
   "folke/snacks.nvim",
+  enabled = true,
   priority = 1000,
   lazy = false,
   opts = {
@@ -44,6 +45,7 @@ return {
     },
     input = { enabled = true },
     gitbrowse = { enabled = true },
+    lazygit = { enabled = true },
     notifier = { enabled = true },
     quickfile = { enabled = true },
     scratch = { enabled = true },

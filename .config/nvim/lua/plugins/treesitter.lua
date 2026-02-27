@@ -35,6 +35,7 @@ local languages = {
 return {
   {
     "nvim-treesitter/nvim-treesitter",
+    enabled = true,
     event = "BufRead",
     pattern = languages,
     build = ":TSUpdate",
@@ -47,6 +48,11 @@ return {
 
       highlight = { enable = true },
       indent = { enable = true },
+      folds = {
+        enable = true,
+        -- Disable folding for files larger than 10KB to improve performance
+        max_fold_size = 10000,
+      },
       incremental_selection = {
         enable = true,
         keymaps = {
@@ -60,6 +66,7 @@ return {
   },
   {
     "echasnovski/mini.ai",
+    enabled = false,
     event = "VeryLazy",
     opts = function()
       local ai = require("mini.ai")

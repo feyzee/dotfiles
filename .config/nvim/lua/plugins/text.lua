@@ -7,11 +7,13 @@
 return {
   {
     "echasnovski/mini.pairs",
+    enabled = true,
     event = "VeryLazy",
     opts = {},
   },
   {
     "folke/todo-comments.nvim",
+    enabled = true,
     opts = {
       signs = true, -- show icons in the signs column
       sign_priority = 8, -- sign priority
@@ -83,6 +85,7 @@ return {
   },
   {
     "nvim-mini/mini.surround",
+    enabled = true,
     opts = {
       mappings = {
         add = "gsa", -- Add surrounding in Normal and Visual modes
@@ -97,6 +100,7 @@ return {
   },
   {
     "stevearc/conform.nvim",
+    enabled = true,
     event = { "BufWritePre" },
     cmd = { "ConformInfo" },
     keys = {
@@ -137,6 +141,7 @@ return {
       format_on_save = {
         timeout_ms = 3000,
         lsp_fallback = true,
+        quiet = true,
       },
 
       notify_on_error = true,

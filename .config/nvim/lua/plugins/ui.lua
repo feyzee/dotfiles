@@ -9,6 +9,7 @@
 return {
   {
     "echasnovski/mini.icons",
+    enabled = true,
     opts = {
       default_component_configs = {
         icon = {
@@ -49,6 +50,7 @@ return {
   },
   {
     "folke/noice.nvim",
+    enabled = true,
     event = "VeryLazy",
     opts = {
       lsp = {
@@ -104,6 +106,8 @@ return {
   },
   {
     "folke/which-key.nvim",
+    enabled = true,
+    event = "VeryLazy",
     opts_extend = { "spec" },
     opts = {
       preset = "helix",

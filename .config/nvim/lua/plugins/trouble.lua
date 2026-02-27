@@ -4,6 +4,7 @@
 return {
   "folke/trouble.nvim",
   cmd = "Trouble",
+  enabled = false,
 
   keys = {
     {
