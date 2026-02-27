@@ -57,33 +57,3 @@ vim.opt.confirm = true
 vim.opt.laststatus = 3
 vim.opt.sessionoptions = "buffers,curdir,tabpages,winsize,help,globals,skiprtp,folds,resize"
 
--- Set filetypes for various extensions
-vim.filetype.add({
-  extension = {
-    tfstate = "json",
-    tofu = "opentofu",
-  },
-  filename = {
-    [".dockerignore"] = "gitignore",
-    ["shellcheckrc"] = "conf",
-  },
-  pattern = {
-    [".*%.json%.tftpl"] = "json",
-    [".*%.yaml%.tftpl"] = "yaml",
-    ["%.secrets.*"] = "sh",
-    [".*%.gitignore.*"] = "gitignore",
-    [".*Dockerfile.*"] = "dockerfile",
-    [".*Jenkinsfile.*"] = "groovy",
-    [".*envrc.*"] = "sh",
-    [".*README.(%a+)"] = function(ext)
-      if ext == "md" then
-        return "markdown"
-      elseif ext == "rst" then
-        return "rst"
-      end
-    end,
-    ["/templates/.*%.yaml"] = "helm",
-    ["/templates/.*%.tpl"] = "helm",
-    [".*%.helm"] = "helm",
-  },
-})
