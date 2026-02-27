@@ -62,7 +62,7 @@ local servers = {
   "ruff",
   "rust_analyzer",
   "tofu_ls",
-  -- "tflint",
+  "tflint",
   "ts_ls",
   "yamlls",
 }

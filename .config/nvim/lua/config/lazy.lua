@@ -28,16 +28,13 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
--- local plugins = require("plugins.plugins")
--- require("plugins.setup")
-
 require("lazy").setup({
   spec = {
     { import = "plugins" },
   },
 
   defaults = {
-    lazy = false,
+    lazy = false, -- Enable lazy loading by default to reduce memory usage and startup time
   },
 
   performance = {

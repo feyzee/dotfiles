@@ -4,28 +4,20 @@
 --   - gitsigns.nvim
 
 return {
-  { "sindrets/diffview.nvim" },
-  { "akinsho/git-conflict.nvim" },
+  {
+    "sindrets/diffview.nvim",
+    enabled = false,
+  },
+  { "akinsho/git-conflict.nvim", enabled = false },
+  {
+    "nvim-mini/mini.diff",
+    version = "*",
+    enabled = true,
+  },
   {
     "lewis6991/gitsigns.nvim",
-    ft = "gitcommit",
-    enable = false,
-    init = function()
-      -- load gitsigns only when a git file is opened
-      vim.api.nvim_create_autocmd({ "BufRead" }, {
-        group = vim.api.nvim_create_augroup("GitSignsLazyLoad", { clear = true }),
-        callback = function()
-          vim.fn.system("git -C " .. vim.fn.expand("%:p:h") .. " rev-parse")
-          if vim.v.shell_error == 0 then
-            vim.api.nvim_del_augroup_by_name("GitSignsLazyLoad")
-            vim.schedule(function()
-              require("lazy").load({ plugins = { "gitsigns.nvim" } })
-            end)
-          end
-        end,
-      })
-    end,
-
+    -- ft = "gitcommit",
+    enabled = true,
     opts = {
       signs = {
         add = { hl = "DiffAdd", text = "│", numhl = "GitSignsAddNr" },
@@ -76,8 +68,6 @@ return {
         end, { expr = true })
 
         -- Actions
-        map("n", "]c", "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'", { expr = true })
-        map("n", "[c", "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'", { expr = true })
         map({ "n", "v" }, "<leader>hs", ":Gitsigns stage_hunk<CR>")
         map({ "n", "v" }, "<leader>hr", ":Gitsigns reset_hunk<CR>")
         map("n", "<leader>hS", gs.stage_buffer)

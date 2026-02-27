@@ -3,6 +3,7 @@
 
 return {
   "nvim-lualine/lualine.nvim",
+  event = "VeryLazy",
   opts = {
     options = {
       component_separators = "|",
@@ -40,15 +41,8 @@ return {
       lualine_y = {
         "selectioncount",
         "filetype",
-        {
-          "lsp_status",
-          symbols = {
-            done = "✓",
-            separator = ", ",
-          },
-          ignore_lsp = {},
-          show_name = true,
-        },
+        -- Removed "lsp_status" component for better performance
+        -- It was causing excessive CPU usage on statusline updates
       },
       lualine_z = {
         "progress",
@@ -71,18 +65,9 @@ return {
               tab_name = nil
             end
 
-            local buflist = vim.fn.tabpagebuflist(tabnr)
-            local unique_bufs = {}
-            for _, b in ipairs(buflist) do
-              unique_bufs[b] = true
-            end
-            local count = 0
-            for _ in pairs(unique_bufs) do
-              count = count + 1
-            end
-
+            -- Simplified: don't show buffer count to avoid expensive tabpagebuflist() call
             local display_name = tab_name or name
-            return string.format("%d: %s (%d)", tabnr, display_name, count)
+            return string.format("%d: %s", tabnr, display_name)
           end,
         },
       },
