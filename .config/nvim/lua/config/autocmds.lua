@@ -1,59 +1,72 @@
 -- Augroups
 local LspAttachGroup = vim.api.nvim_create_augroup("lsp-attach", { clear = true })
 
+-- Buffer variable cleanup on delete
+vim.api.nvim_create_autocmd("BufDelete", {
+  group = vim.api.nvim_create_augroup("LspBufferCleanup", { clear = true }),
+  callback = function(event)
+    pcall(function()
+      vim.b[event.buf].lsp_inlay_keymap_set = nil
+    end)
+    pcall(function()
+      vim.b[event.buf].lsp_codelens_keymap_set = nil
+    end)
+  end,
+})
+
 -- LSP related
--- vim.api.nvim_create_autocmd("LspAttach", {
---   group = LspAttachGroup,
---   callback = function(event)
---     local client = vim.lsp.get_client_by_id(event.data.client_id)
---     if not client then
---       return
---     end
---
---     -- Enable inlay hints if supported
---     if client:supports_method("textDocument/inlayHint") then
---       vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
---
---       if not vim.b[event.buf].lsp_inlay_keymap_set then
---         vim.keymap.set("n", "<leader>ih", function()
---           vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }), { bufnr = event.buf })
---         end, { desc = "Toggle Inlay Hints", buffer = event.buf })
---         vim.b[event.buf].lsp_inlay_keymap_set = true
---       end
---     end
---
---     -- Trigger codelens manually
---     if client:supports_method("textDocument/codeLens") then
---       if not vim.b[event.buf].lsp_codelens_keymap_set then
---         vim.keymap.set("n", "<leader>cl", function()
---           vim.lsp.codelens.refresh({ bufnr = event.buf })
---         end, { desc = "Refresh CodeLens", buffer = event.buf })
---         vim.b[event.buf].lsp_codelens_keymap_set = true
---       end
---     end
---
---     -- Disable semantic tokens for large files
---     if vim.api.nvim_buf_line_count(event.buf) > 5000 then
---       vim.lsp.semantic_tokens.stop(event.buf, client.id)
---     end
---   end,
--- })
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = LspAttachGroup,
+  callback = function(event)
+    local client = vim.lsp.get_client_by_id(event.data.client_id)
+    if not client then
+      return
+    end
+
+    -- Enable inlay hints if supported
+    if client:supports_method("textDocument/inlayHint") then
+      vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
+
+      if not vim.b[event.buf].lsp_inlay_keymap_set then
+        vim.keymap.set("n", "<leader>ih", function()
+          vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }), { bufnr = event.buf })
+        end, { desc = "Toggle Inlay Hints", buffer = event.buf })
+        vim.b[event.buf].lsp_inlay_keymap_set = true
+      end
+    end
+
+    -- Trigger codelens manually
+    if client:supports_method("textDocument/codeLens") then
+      if not vim.b[event.buf].lsp_codelens_keymap_set then
+        vim.keymap.set("n", "<leader>cl", function()
+          vim.lsp.codelens.refresh({ bufnr = event.buf })
+        end, { desc = "Refresh CodeLens", buffer = event.buf })
+        vim.b[event.buf].lsp_codelens_keymap_set = true
+      end
+    end
+
+    -- Disable semantic tokens for large files
+    if vim.api.nvim_buf_line_count(event.buf) > 5000 then
+      vim.lsp.semantic_tokens.stop(event.buf, client.id)
+    end
+  end,
+})
 
 -- Do cleanup when LspDetach event occurs
--- vim.api.nvim_create_autocmd("LspDetach", {
---   group = vim.api.nvim_create_augroup("LspDetach", { clear = true }),
---   callback = function(event)
---     vim.lsp.buf.clear_references()
---
---     local remaining_clients = vim.lsp.get_clients({ bufnr = event.buf })
---     if #remaining_clients == 0 then
---       pcall(vim.lsp.inlay_hint.enable, false, { bufnr = event.buf })
---       -- Clean up buffer-local keymap tracking variables
---       vim.b[event.buf].lsp_inlay_keymap_set = nil
---       vim.b[event.buf].lsp_codelens_keymap_set = nil
---     end
---   end,
--- })
+vim.api.nvim_create_autocmd("LspDetach", {
+  group = vim.api.nvim_create_augroup("LspDetach", { clear = true }),
+  callback = function(event)
+    vim.lsp.buf.clear_references()
+
+    local remaining_clients = vim.lsp.get_clients({ bufnr = event.buf })
+    if #remaining_clients == 0 then
+      pcall(vim.lsp.inlay_hint.enable, false, { bufnr = event.buf })
+      -- Clean up buffer-local keymap tracking variables
+      vim.b[event.buf].lsp_inlay_keymap_set = nil
+      vim.b[event.buf].lsp_codelens_keymap_set = nil
+    end
+  end,
+})
 
 -- Highlight on yank
 vim.api.nvim_create_autocmd("TextYankPost", {
