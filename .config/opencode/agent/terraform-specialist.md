@@ -4,9 +4,9 @@ mode: subagent
 model: zai-coding-plan/glm-4.7
 temperature: 0.1
 tools:
-  write: ask
-  edit: ask
-  bash: ask
+  write: true
+  edit: true
+  bash: true
   read: true
   grep: true
   glob: true

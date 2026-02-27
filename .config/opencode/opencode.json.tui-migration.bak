@@ -1,5 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "theme": "tokyonight",
   "formatter": {
     "terraform": {
       "command": ["terraform", "fmt"],
@@ -20,5 +21,11 @@
     "skill": "ask",
     "todoread": "allow",
     "webfetch": "ask"
+  },
+  "tui": {
+    "scroll_speed": 3,
+    "scroll_acceleration": {
+      "enabled": true
+    }
   }
 }
