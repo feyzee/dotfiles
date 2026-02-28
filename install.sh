@@ -73,7 +73,16 @@ configure_dotfiles()
         fi
     popd > /dev/null
 
-    stow .
+    stow bat
+    stow claude
+    stow helix
+    stow kitty
+    stow lazygit
+    stow opencode
+    stow nvim
+    stow procs
+    stow wezterm
+    stow nvim
 }
 
 configure_firefox()
