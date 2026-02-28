@@ -23,10 +23,6 @@ init()
         install_git $platform
     fi
 
-    echo "Cloning dotfiles repository"
-    git clone https://github.com/feyzee/dotfiles
-    cd dotfiles
-
     echo "Installing packages"
     if [ $platform == 'Linux' ]; then
         source scripts/fedora.sh
@@ -60,10 +56,22 @@ install_git()
 
 configure_dotfiles()
 {
-    if ! [ -x "$(command -v git)" ]; then
+    OS=$(uname)
+
+    if ! [ -x "$(command -v stow)" ]; then
         echo 'Stow is not installed. Exiting...'
         exit 1
     fi
+
+    # Configure Ghostty
+    stow ghostty
+    pushd ~/.config/ghostty > /dev/null
+        if [ "$OS" = "Darwin" ]; then
+            ln -sfn macos.conf platform.conf
+        else
+            ln -sfn linux.conf platform.conf
+        fi
+    popd > /dev/null
 
     stow .
 }
