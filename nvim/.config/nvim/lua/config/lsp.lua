@@ -38,8 +38,11 @@ vim.lsp.config("*", {
       properties = { "documentation", "detail", "additionalTextEdits" },
     }
 
-    -- Disable folding range globally (using treesitter instead)
-    capabilities.textDocument.foldingRange = nil
+    -- Enable folding range as fallback for when treesitter is not available
+    capabilities.textDocument.foldingRange = {
+      dynamicRegistration = false,
+      lineFoldingOnly = true,
+    }
 
     -- Enable workspace file operations
     capabilities.workspace.fileOperations = {
@@ -61,6 +64,7 @@ local servers = {
   "lua_ls",
   "ruff",
   "rust_analyzer",
+  "terraformls",
   "tofu_ls",
   "tflint",
   "ts_ls",

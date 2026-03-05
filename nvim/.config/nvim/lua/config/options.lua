@@ -32,20 +32,8 @@ vim.opt.hlsearch = false
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 
--- fold
-vim.opt.foldtext = ""
-vim.opt.foldlevel = 99
-vim.opt.foldlevelstart = 99
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-vim.opt.fillchars = {
-  foldopen = "",
-  foldclose = "",
-  fold = " ",
-  foldsep = " ",
-  diff = "╱",
-  eob = " ",
-}
+-- fold - Setup smart folding with Treesitter -> LSP -> indent fallback
+require("util.folding").setup()
 
 vim.cmd([[colorscheme tokyonight]])
 vim.api.nvim_set_option_value("colorcolumn", "79", {})

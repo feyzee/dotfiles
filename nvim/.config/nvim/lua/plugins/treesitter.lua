@@ -29,7 +29,6 @@ local languages = {
   "gosum",
   "sql",
   "gotmpl",
-  "comment",
 }
 
 return {
@@ -63,6 +62,10 @@ return {
         },
       },
     },
+    -- config = function(_, opts)
+    --   -- Setup treesitter
+    --   require("nvim-treesitter.configs").setup(opts)
+    -- end,
   },
   {
     "echasnovski/mini.ai",
