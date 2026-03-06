@@ -12,6 +12,7 @@
 This section covers essential tools and modern CLI utilities for maintaining code quality, navigating the codebase, and performing common development tasks in this Neovim Lua configuration. Commands are designed to work in both bash and fish shells.
 
 ### Code Quality & Formatting
+
 - **Lint specific files**: `selene lua/config/autocmds.lua` - Check individual files for linting issues
 - **Lint with output**: `selene lua/ --display-style=quiet` - Run linting with minimal output
 - **Format single file**: `stylua lua/config/options.lua` - Format a specific Lua file
@@ -19,6 +20,7 @@ This section covers essential tools and modern CLI utilities for maintaining cod
 - **Format all files**: `fd -e lua -x stylua` - Format all Lua files using fd for fast file discovery
 
 ### Code Navigation & Search
+
 - **Find Lua files**: `fd -e lua . lua/` - Locate all Lua files in the config directory
 - **Search for functions**: `rg "function.*" lua/config/` - Find function definitions using ripgrep
 - **Search with context**: `rg -A 2 -B 2 "vim\.api\.nvim" lua/` - Find API usage with surrounding lines
@@ -27,17 +29,20 @@ This section covers essential tools and modern CLI utilities for maintaining cod
 - **View file contents**: `bat lua/config/options.lua` - Syntax-highlighted file viewing
 
 ### Configuration Validation
+
 - **Check LSP configs**: `for f in (fd -e lua lsp/); echo "Checking $f"; lua -e "require(string.match('$f', 'lsp/(.+)%.lua'))"; end` - Validate LSP configuration files (fish-compatible loop)
 - **Verify plugin specs**: `fd -e lua lua/plugins/ | xargs -I {} lua -e "dofile('{}')"` - Test plugin specifications load without errors
 - **Check for syntax errors**: `fd -e lua -x lua -e "loadfile('{}')"` - Quick syntax validation of all Lua files
 
 ### Maintenance Tasks
+
 - **Remove trailing whitespace**: `fd -e lua -x sed -i 's/[[:space:]]*$//' {}` - Clean up files (works in both bash and fish)
 - **Check for unused requires**: `rg "^local.*require" lua/ | sort | uniq -c | sort -nr` - Identify potential unused imports
 - **Backup before changes**: `cp -r lua/ lua_backup_(date +%Y%m%d_%H%M%S)` - Create timestamped backup (fish uses parentheses for command substitution)
 - **Compare directories**: `diff -r lua/ lua_backup/` - See changes after modifications
 
 ### Shell Script Integration
+
 - **Simple lint script** (fish-compatible):
   ```
   #!/usr/bin/env fish
@@ -48,6 +53,7 @@ This section covers essential tools and modern CLI utilities for maintaining cod
 - **Git integration**: `git ls-files '*.lua' | xargs selene` - Lint only tracked Lua files
 
 ### Best Practices
+
 - Always run `selene lua/` and `stylua --check lua/` before committing
 - Use `fd` and `rg` for fast, efficient file operations
 - Leverage `eza` and `bat` for better directory and file visualization
@@ -57,11 +63,13 @@ This section covers essential tools and modern CLI utilities for maintaining cod
 ## Code Style Guidelines
 
 ### Formatting
+
 - Use 2 spaces for indentation (stylua config)
 - 120 character column width
 - Prefer double quotes for strings
 - Use `vim.opt` over `vim.o` for consistency
 - Example:
+
   ```lua
   -- Good
   local config = {
@@ -77,11 +85,13 @@ This section covers essential tools and modern CLI utilities for maintaining cod
   ```
 
 ### Imports & Structure
+
 - Require modules at top of files
 - Use `require("config.module")` pattern for internal modules
 - Organize requires in order: external, then internal
 - Group related requires together
 - Example:
+
   ```lua
   -- External dependencies
   local plenary = require("plenary")
@@ -92,11 +102,13 @@ This section covers essential tools and modern CLI utilities for maintaining cod
   ```
 
 ### Naming Conventions
+
 - Use snake_case for variables and functions
 - Use PascalCase for modules/require paths
 - Prefix local variables with `local` keyword
 - Use descriptive names, avoid abbreviations
 - Examples:
+
   ```lua
   -- Good
   local function setup_keymaps()
@@ -110,6 +122,7 @@ This section covers essential tools and modern CLI utilities for maintaining cod
   ```
 
 ### Comments & Documentation
+
 - Use `--` for single-line comments
 - Use `--[[ ]]` for multi-line comments
 - Document complex logic or non-obvious code
@@ -128,11 +141,13 @@ This section covers essential tools and modern CLI utilities for maintaining cod
   ```
 
 ### Error Handling
+
 - Use `pcall` for safe function calls
 - Check for nil returns before usage
 - Use vim.validate for parameter validation when appropriate
 - Provide meaningful error messages
 - Examples:
+
   ```lua
   -- Safe require
   local ok, result = pcall(require, "some.module")
@@ -151,6 +166,7 @@ This section covers essential tools and modern CLI utilities for maintaining cod
 ## File Organization & Structure
 
 ### Directory Structure
+
 - `lua/config/` - Core configuration modules
 - `lua/plugins/` - Plugin specifications for lazy.nvim
 - `lsp/` - LSP server configurations
@@ -158,6 +174,7 @@ This section covers essential tools and modern CLI utilities for maintaining cod
 - Keep related functionality grouped together
 
 ### Module Organization
+
 - Each module should have a single responsibility
 - Use clear, hierarchical naming
 - Export only necessary functions
@@ -172,6 +189,7 @@ This section covers essential tools and modern CLI utilities for maintaining cod
   ```
 
 ### Plugin Specifications
+
 - Use lazy.nvim spec format
 - Group related plugins together
 - Include proper dependencies
@@ -191,9 +209,11 @@ This section covers essential tools and modern CLI utilities for maintaining cod
 ## Neovim-Specific Conventions
 
 ### API Usage
+
 - Use `vim.api.nvim_*` functions over deprecated `vim.*` equivalents
 - Prefer Lua APIs over Vimscript when available
 - Examples:
+
   ```lua
   -- Good
   vim.api.nvim_set_keymap("n", "<leader>q", ":q<CR>", { noremap = true })
@@ -203,10 +223,12 @@ This section covers essential tools and modern CLI utilities for maintaining cod
   ```
 
 ### Key Mappings
+
 - Prefer `vim.keymap.set` for key mappings
 - Use descriptive names for key groups
 - Include buffer-specific mappings when needed
 - Examples:
+
   ```lua
   -- Global mapping
   vim.keymap.set("n", "<leader>ff", function()
@@ -221,10 +243,12 @@ This section covers essential tools and modern CLI utilities for maintaining cod
   ```
 
 ### Autocommands
+
 - Use autocmd groups for organization
 - Clear groups to prevent duplication
 - Prefer Lua callbacks over Vimscript commands
 - Examples:
+
   ```lua
   local group = vim.api.nvim_create_augroup("MyGroup", { clear = true })
 
@@ -239,10 +263,12 @@ This section covers essential tools and modern CLI utilities for maintaining cod
   ```
 
 ### LSP Setup
+
 - Set up LSP servers via `vim.lsp.enable()`
 - Configure capabilities and on_attach handlers
 - Use proper error handling
 - Example:
+
   ```lua
   vim.lsp.enable({ "lua_ls", "rust_analyzer" })
 
@@ -254,10 +280,12 @@ This section covers essential tools and modern CLI utilities for maintaining cod
 ## Best Practices & Patterns
 
 ### Performance Considerations
+
 - Avoid global lookups in hot paths
 - Use local variables for frequently accessed functions
 - Minimize autocmd usage for performance-critical code
 - Example:
+
   ```lua
   -- Cache frequently used functions
   local api = vim.api
@@ -270,11 +298,13 @@ This section covers essential tools and modern CLI utilities for maintaining cod
   ```
 
 ### Memory Management
+
 - Clean up autocmds and keymaps when no longer needed
 - Use weak tables for caches when appropriate
 - Avoid accumulating state unnecessarily
 
 ### Plugin Integration
+
 - Check plugin availability before using
 - Provide fallbacks for optional dependencies
 - Use lazy loading when possible
@@ -287,10 +317,12 @@ This section covers essential tools and modern CLI utilities for maintaining cod
   ```
 
 ### Configuration Modularity
+
 - Split configuration into logical modules
 - Use options tables for complex setups
 - Allow user customization
 - Example:
+
   ```lua
   local defaults = {
     enable_lsp = true,
@@ -304,6 +336,7 @@ This section covers essential tools and modern CLI utilities for maintaining cod
   ```
 
 ### Web Content Fetching
+
 - When fetching content from GitHub using webfetch, use raw content URLs instead of blob URLs for better accessibility
 - Convert blob URLs to raw URLs by replacing `github.com/user/repo/blob/branch/file` with `raw.githubusercontent.com/user/repo/branch/file`
 - Example: `https://github.com/codecrafters-io/build-your-own-x/blob/master/README.md` → `https://raw.githubusercontent.com/codecrafters-io/build-your-own-x/master/README.md`
@@ -311,9 +344,11 @@ This section covers essential tools and modern CLI utilities for maintaining cod
 ## Security Considerations
 
 ### Avoid Secrets in Configuration
+
 - Never commit API keys, passwords, or tokens
 - Use environment variables for sensitive data
 - Example:
+
   ```lua
   -- Good
   local api_key = os.getenv("OPENAI_API_KEY")
@@ -323,11 +358,13 @@ This section covers essential tools and modern CLI utilities for maintaining cod
   ```
 
 ### Safe Command Execution
+
 - Validate inputs before executing commands
 - Use `pcall` for potentially failing operations
 - Sanitize file paths
 
 ### Plugin Trust
+
 - Only install plugins from trusted sources
 - Review plugin code for security issues
 - Keep plugins updated
@@ -335,18 +372,21 @@ This section covers essential tools and modern CLI utilities for maintaining cod
 ## Tool-Specific Configurations
 
 ### Stylua (Formatting)
+
 - Configuration in `.stylua.toml`
 - 2-space indentation, 120-character width
 - Double quotes preferred
 - Run `stylua --check .` to verify formatting
 
 ### Selene (Linting)
+
 - Configuration in `selene.toml`
 - Allows `undefined_variable` (vim globals)
 - Allows `mixed_table` for flexibility
 - Run `selene lua/` for full codebase linting
 
 ### Lazy.nvim (Plugin Management)
+
 - Plugin specs in `lua/plugins/*.lua`
 - Use lazy loading for performance
 - Specify dependencies explicitly

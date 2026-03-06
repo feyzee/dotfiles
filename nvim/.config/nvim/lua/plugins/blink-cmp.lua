@@ -32,7 +32,11 @@ return {
     },
 
     cmdline = {
-      keymap = { preset = "inherit" },
+      keymap = {
+        ["<C-space>"] = { "accept_and_enter", "fallback" },
+        ["<Tab>"] = { "select_next", "fallback" },
+        ["<S-Tab>"] = { "select_prev", "fallback" },
+      },
       completion = { menu = { auto_show = true } },
     },
 

@@ -33,7 +33,7 @@ vim.opt.splitbelow = true
 vim.opt.splitright = true
 
 -- fold - Setup smart folding with Treesitter -> LSP -> indent fallback
-require("util.folding").setup()
+-- require("util.folding").setup()
 
 vim.cmd([[colorscheme tokyonight]])
 vim.api.nvim_set_option_value("colorcolumn", "79", {})
@@ -44,4 +44,3 @@ vim.opt.timeoutlen = 500
 vim.opt.confirm = true
 vim.opt.laststatus = 3
 vim.opt.sessionoptions = "buffers,curdir,tabpages,winsize,help,globals,skiprtp,folds,resize"
-
