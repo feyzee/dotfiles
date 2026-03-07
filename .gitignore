@@ -209,5 +209,8 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+### FISH
+fish/.config/fish/fish_variables
+
 # Claude Code
 claude/
