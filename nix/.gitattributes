@@ -1,0 +1,11 @@
+# Nix files
+*.nix text eol=lf
+
+# Nix store paths and references
+*.drv -diff merge=binary
+
+# Secrets (encrypted)
+*.age binary
+secrets/*.age binary
+secrets/*.yaml binary
+secrets/.sops.yaml binary

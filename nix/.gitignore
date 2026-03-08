@@ -1,0 +1,20 @@
+# Nix build artifacts
+result
+result-*
+
+# direnv
+.direnv/
+.envrc
+
+# Secrets (encrypted files)
+secrets/*.age
+secrets/*.yaml
+secrets/.sops.yaml
+
+# Home Manager
+.home-manager-*
+
+# Temporary files
+*.swp
+*.swo
+*~
