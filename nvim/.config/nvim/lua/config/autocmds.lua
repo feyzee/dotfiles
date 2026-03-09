@@ -77,7 +77,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   pattern = "*",
 })
 
-Restore cursor to file position in previous editing session
+-- Restore cursor to file position in previous editing session
 vim.api.nvim_create_autocmd("BufReadPost", {
   group = vim.api.nvim_create_augroup("RestoreCursor", { clear = true }),
   callback = function(args)
