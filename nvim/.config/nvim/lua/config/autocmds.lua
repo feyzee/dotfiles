@@ -68,11 +68,17 @@ vim.api.nvim_create_autocmd("LspDetach", {
   end,
 })
 
--- Highlight on yank
+-- Highlight on yank and notify for named/clipboard registers
 vim.api.nvim_create_autocmd("TextYankPost", {
   group = vim.api.nvim_create_augroup("YankHighlight", { clear = true }),
   callback = function()
     vim.highlight.on_yank()
+
+    local reg = vim.v.event.regname
+    if reg and (reg:match("^[a-zA-Z]$") or reg == "+" or reg == "*") then
+      local reg_display = reg == "+" and "clipboard (+)" or reg == "*" and "clipboard (*)" or "register " .. reg
+      vim.notify("Yanked to " .. reg_display, vim.log.levels.INFO)
+    end
   end,
   pattern = "*",
 })
