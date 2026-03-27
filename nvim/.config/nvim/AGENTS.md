@@ -4,69 +4,74 @@
 
 - **Lint**: `selene lua/` (Lua linting with selene)
 - **Format**: `stylua .` (Lua formatting with stylua)
+- **Format check**: `stylua --check lua/` (verify formatting without changes)
 - **Type check**: `lua-language-server --check` (Lua type checking)
-- **Test**: No test framework configured - this is a Neovim config
+- **Syntax check**: `fd -e lua -x lua -e "loadfile('{}')"` (quick syntax validation)
+- **Test**: No test framework configured — this is a Neovim config
+- **Git pre-commit**: `git ls-files '*.lua' | xargs selene` (lint only tracked files)
+
+## Bootstrap & Load Order
+
+The config loads via this chain:
+
+1. `init.lua` → `require("config")` → `lua/config/init.lua`
+2. `lua/config/init.lua` loads modules **in this order**:
+   - `config.lazy` — bootstraps lazy.nvim, sets `mapleader = " "`, loads all plugin specs from `lua/plugins/`
+   - `config.filetype` — custom filetype detection rules (terraform, helm, docker, etc.)
+   - `config.lsp` — diagnostic config, global LSP capabilities, enables LSP servers
+   - `config.keymaps` — all global key mappings
+   - `config.autocmds` — autocommands (LSP attach/detach, yank highlight, cursor restore, etc.)
+   - `config.options` — vim.opt settings (colorscheme: tokyonight, 4-space tabs, etc.)
+   - `config.monitoring` — custom user commands for debugging (`:AutocmdStats`, `:MemoryStats`, `:MemoryDetailed`)
+
+**Important**: `config.lazy` must load first since it sets the leader key and bootstraps the plugin manager.
 
 ## Development Tools & Workflow
 
-This section covers essential tools and modern CLI utilities for maintaining code quality, navigating the codebase, and performing common development tasks in this Neovim Lua configuration. Commands are designed to work in both bash and fish shells.
+Commands are designed to work in both bash and fish shells.
 
 ### Code Quality & Formatting
 
-- **Lint specific files**: `selene lua/config/autocmds.lua` - Check individual files for linting issues
-- **Lint with output**: `selene lua/ --display-style=quiet` - Run linting with minimal output
-- **Format single file**: `stylua lua/config/options.lua` - Format a specific Lua file
-- **Format check only**: `stylua --check lua/` - Verify formatting without making changes
-- **Format all files**: `fd -e lua -x stylua` - Format all Lua files using fd for fast file discovery
+- **Lint all**: `selene lua/`
+- **Lint specific file**: `selene lua/config/autocmds.lua`
+- **Lint quiet**: `selene lua/ --display-style=quiet`
+- **Format all**: `fd -e lua -x stylua`
+- **Format single file**: `stylua lua/config/options.lua`
+- **Format check only**: `stylua --check lua/`
 
 ### Code Navigation & Search
 
-- **Find Lua files**: `fd -e lua . lua/` - Locate all Lua files in the config directory
-- **Search for functions**: `rg "function.*" lua/config/` - Find function definitions using ripgrep
-- **Search with context**: `rg -A 2 -B 2 "vim\.api\.nvim" lua/` - Find API usage with surrounding lines
-- **Count lines in files**: `fd -e lua -x wc -l | sort -nr` - Get file sizes sorted by line count
-- **List directory contents**: `eza --tree --level=2 lua/config/` - Visualize directory structure
-- **View file contents**: `bat lua/config/options.lua` - Syntax-highlighted file viewing
+- **Find Lua files**: `fd -e lua . lua/`
+- **Search for functions**: `rg "function.*" lua/config/`
+- **Search with context**: `rg -A 2 -B 2 "vim\.api\.nvim" lua/`
+- **Count lines per file**: `fd -e lua -x wc -l | sort -nr`
+- **Tree view**: `eza --tree --level=2 lua/config/`
+- **View file**: `bat lua/config/options.lua`
 
 ### Configuration Validation
 
-- **Check LSP configs**: `for f in (fd -e lua lsp/); echo "Checking $f"; lua -e "require(string.match('$f', 'lsp/(.+)%.lua'))"; end` - Validate LSP configuration files (fish-compatible loop)
-- **Verify plugin specs**: `fd -e lua lua/plugins/ | xargs -I {} lua -e "dofile('{}')"` - Test plugin specifications load without errors
-- **Check for syntax errors**: `fd -e lua -x lua -e "loadfile('{}')"` - Quick syntax validation of all Lua files
+- **Check for syntax errors**: `fd -e lua -x lua -e "loadfile('{}')"`
+- **Check for unused requires**: `rg "^local.*require" lua/ | sort | uniq -c | sort -nr`
 
 ### Maintenance Tasks
 
-- **Remove trailing whitespace**: `fd -e lua -x sed -i 's/[[:space:]]*$//' {}` - Clean up files (works in both bash and fish)
-- **Check for unused requires**: `rg "^local.*require" lua/ | sort | uniq -c | sort -nr` - Identify potential unused imports
-- **Backup before changes**: `cp -r lua/ lua_backup_(date +%Y%m%d_%H%M%S)` - Create timestamped backup (fish uses parentheses for command substitution)
-- **Compare directories**: `diff -r lua/ lua_backup/` - See changes after modifications
-
-### Shell Script Integration
-
-- **Simple lint script** (fish-compatible):
-  ```
-  #!/usr/bin/env fish
-  selene lua/
-  stylua --check lua/
-  ```
-- **Batch formatting**: `fd -e lua -x stylua` - Format all files with modern tools
-- **Git integration**: `git ls-files '*.lua' | xargs selene` - Lint only tracked Lua files
+- **Remove trailing whitespace**: `fd -e lua -x sed -i 's/[[:space:]]*$//' {}`
+- **Backup before changes**: `cp -r lua/ lua_backup_(date +%Y%m%d_%H%M%S)` (fish syntax)
+- **Compare directories**: `diff -r lua/ lua_backup/`
 
 ### Best Practices
 
 - Always run `selene lua/` and `stylua --check lua/` before committing
 - Use `fd` and `rg` for fast, efficient file operations
-- Leverage `eza` and `bat` for better directory and file visualization
-- Test LSP configs after changes: `lua -e "require('config.lsp')"`
 - Prefer fish-compatible syntax in scripts (e.g., `(command)` instead of `$(command)`)
 
 ## Code Style Guidelines
 
 ### Formatting
 
-- Use 2 spaces for indentation (stylua config)
-- 120 character column width
-- Prefer double quotes for strings
+- **Lua files**: 2-space indentation, 120-char column width (enforced by `.stylua.toml`)
+- **Editor default**: 4-space tabs via `options.lua` — per-filetype overrides live in `after/ftplugin/`
+- Prefer double quotes for strings (stylua: `AutoPreferDouble`)
 - Use `vim.opt` over `vim.o` for consistency
 - Example:
 
@@ -87,7 +92,7 @@ This section covers essential tools and modern CLI utilities for maintaining cod
 ### Imports & Structure
 
 - Require modules at top of files
-- Use `require("config.module")` pattern for internal modules
+- Use `require("config.module")` pattern for internal modules (always `snake_case` paths)
 - Organize requires in order: external, then internal
 - Group related requires together
 - Example:
@@ -103,21 +108,24 @@ This section covers essential tools and modern CLI utilities for maintaining cod
 
 ### Naming Conventions
 
-- Use snake_case for variables and functions
-- Use PascalCase for modules/require paths
+- Use `snake_case` for variables, functions, and module/require paths
 - Prefix local variables with `local` keyword
-- Use descriptive names, avoid abbreviations
+- Use descriptive names; short names like `buf`, `api`, `fn` are acceptable for well-known Neovim idioms
+- Avoid `camelCase` or `PascalCase`
 - Examples:
 
   ```lua
   -- Good
+  local keymap = vim.keymap.set
+  local api = vim.api
+
   local function setup_keymaps()
-    local buffer_number = vim.api.nvim_get_current_buf()
+    local buf = api.nvim_get_current_buf()
   end
 
-  -- Bad
+  -- Bad (camelCase)
   local function setupKeys()
-    local buf = vim.api.nvim_get_current_buf()
+    local currentBuffer = vim.api.nvim_get_current_buf()
   end
   ```
 
@@ -167,41 +175,95 @@ This section covers essential tools and modern CLI utilities for maintaining cod
 
 ### Directory Structure
 
-- `lua/config/` - Core configuration modules
-- `lua/plugins/` - Plugin specifications for lazy.nvim
-- `lsp/` - LSP server configurations
-- `after/ftplugin/` - Filetype-specific settings
-- Keep related functionality grouped together
+```
+~/.config/nvim/
+├── init.lua                -- Entry point: require("config")
+├── .stylua.toml            -- Lua formatter config (2-space, 120-col, double quotes)
+├── selene.toml             -- Lua linter config
+├── lazy-lock.json          -- Plugin version lockfile
+├── lua/
+│   ├── .luarc.json         -- Lua LSP workspace config (vim global)
+│   ├── config/
+│   │   ├── init.lua        -- Loads all config modules in order
+│   │   ├── lazy.lua        -- Bootstrap lazy.nvim, set leader key, load plugin specs
+│   │   ├── filetype.lua    -- Custom filetype detection (terraform, helm, docker, etc.)
+│   │   ├── lsp.lua         -- Diagnostic config, global LSP capabilities, enable servers
+│   │   ├── keymaps.lua     -- All global key mappings
+│   │   ├── autocmds.lua    -- Autocommands (LspAttach, yank highlight, cursor restore, etc.)
+│   │   ├── options.lua     -- vim.opt settings, colorscheme
+│   │   └── monitoring.lua  -- Custom debug commands (:AutocmdStats, :MemoryStats, etc.)
+│   └── plugins/            -- lazy.nvim plugin specs (one file per concern)
+│       ├── ai.lua          -- AI tools (sidekick.nvim, opencode.nvim — currently disabled)
+│       ├── blink-cmp.lua   -- Completion engine
+│       ├── catppuccin.lua  -- Catppuccin theme (installed, not active — tokyonight is active)
+│       ├── debug.lua       -- DAP debugging
+│       ├── fzf-lua.lua     -- Fuzzy finder
+│       ├── git.lua         -- Git tools (gitsigns, git-conflict, diffview)
+│       ├── lualine.lua     -- Statusline
+│       ├── minifiles.lua   -- File explorer (mini.files)
+│       ├── navigation.lua  -- Navigation (flash.nvim)
+│       ├── profiling.lua   -- Profiling tools
+│       ├── snacks.lua      -- Snacks.nvim (dashboard, lazygit, notifier, terminal, etc.)
+│       ├── snippets.lua    -- LuaSnip + friendly-snippets
+│       ├── testing.lua     -- Neotest
+│       ├── text.lua        -- Text editing (mini.ai, mini.surround, mini.pairs, conform.nvim, todo-comments)
+│       ├── tokyo-night.lua -- Active colorscheme
+│       ├── treesitter.lua  -- Treesitter
+│       ├── trouble.lua     -- Diagnostics list
+│       └── ui.lua          -- UI (noice.nvim, which-key, mini.icons, mini.diff)
+├── lsp/                    -- Native LSP server configs (vim.lsp.Config tables)
+│   ├── bashls.lua
+│   ├── biome.lua           -- NOT enabled in lsp.lua
+│   ├── cue.lua
+│   ├── golangci_lint_ls.lua
+│   ├── gopls.lua
+│   ├── helm_ls.lua
+│   ├── lua_ls.lua
+│   ├── ruff.lua
+│   ├── rust_analyzer.lua
+│   ├── terraformls.lua     -- NOT enabled in lsp.lua
+│   ├── tflint.lua
+│   ├── tofu_ls.lua
+│   ├── ts_ls.lua
+│   └── yamlls.lua
+└── after/ftplugin/         -- Per-filetype overrides
+    ├── gitcommit.lua
+    ├── hcl.lua
+    ├── javascript.lua
+    ├── json.lua
+    ├── lua.lua
+    ├── markdown.lua
+    ├── python.lua          -- colorcolumn=88, 4-space tabs
+    └── terraform.lua       -- colorcolumn=120, 2-space tabs
+```
 
 ### Module Organization
 
 - Each module should have a single responsibility
-- Use clear, hierarchical naming
+- Use clear, hierarchical naming with `snake_case`
 - Export only necessary functions
-- Example structure:
-  ```
-  lua/config/
-  ├── init.lua      -- Entry point
-  ├── options.lua   -- Vim options
-  ├── keymaps.lua   -- Key mappings
-  ├── autocmds.lua  -- Autocommands
-  └── lsp.lua       -- LSP setup
-  ```
 
 ### Plugin Specifications
 
-- Use lazy.nvim spec format
-- Group related plugins together
+- Use lazy.nvim spec format — each file in `lua/plugins/` returns a table of specs
+- Group related plugins in the same file (e.g., `git.lua` has gitsigns + git-conflict + diffview)
+- `lazy.nvim` defaults: `lazy = false` (eager loading), with disabled builtin plugins for performance
 - Include proper dependencies
 - Example:
   ```lua
   return {
     {
-      "neovim/nvim-lspconfig",
-      dependencies = { "hrsh7th/cmp-nvim-lsp" },
-      config = function()
-        -- LSP setup
-      end,
+      "folke/snacks.nvim",
+      priority = 1000,
+      lazy = false,
+      opts = {
+        bigfile = { enabled = true },
+        dashboard = { enabled = true },
+        -- ...
+      },
+      keys = {
+        { "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
+      },
     },
   }
   ```
@@ -210,72 +272,93 @@ This section covers essential tools and modern CLI utilities for maintaining cod
 
 ### API Usage
 
-- Use `vim.api.nvim_*` functions over deprecated `vim.*` equivalents
 - Prefer Lua APIs over Vimscript when available
+- Use `vim.keymap.set` over `vim.api.nvim_set_keymap` (higher-level, supports function callbacks)
+- Use `vim.api.nvim_create_autocmd` over `vim.cmd("autocmd ...")`
+- Cache frequently used modules as locals (e.g., `local api = vim.api`)
 - Examples:
 
   ```lua
-  -- Good
-  vim.api.nvim_set_keymap("n", "<leader>q", ":q<CR>", { noremap = true })
+  -- Good: vim.keymap.set supports functions and desc
+  vim.keymap.set("n", "<leader>ff", require("fzf-lua").files, { desc = "[F]ind [F]iles" })
 
-  -- Bad (deprecated)
-  vim.api.nvim_command("nmap <leader>q :q<CR>")
+  -- Bad: lower-level, no function callback support
+  vim.api.nvim_set_keymap("n", "<leader>ff", ":FzfLua files<CR>", { noremap = true })
   ```
 
 ### Key Mappings
 
-- Prefer `vim.keymap.set` for key mappings
-- Use descriptive names for key groups
-- Include buffer-specific mappings when needed
+- Use `vim.keymap.set` exclusively (aliased as `local keymap = vim.keymap.set` in `keymaps.lua`)
+- Always include `{ desc = "..." }` for which-key discoverability
+- Leader key is `<Space>` (set in `config.lazy`)
+- Key group conventions:
+  - `<leader>f*` — Find/search (fzf-lua)
+  - `<leader>g*` — Git operations
+  - `<leader>l*` — LSP operations (fzf-lua)
+  - `<leader>tf*` — Terraform commands
+  - `<leader>tr` — Tab rename
+  - `g*` — Go-to (LSP: `gd`, `gr`, `gI`, `gy`, `gK`, `gca`)
+  - `[d` / `]d` — Diagnostic navigation
+  - `<C-h/j/k/l>` — Window navigation
+- Buffer-local mappings are set in `LspAttach` autocmd (inlay hints toggle `<leader>ih`, codelens `<leader>cl`)
 - Examples:
 
   ```lua
-  -- Global mapping
-  vim.keymap.set("n", "<leader>ff", function()
-    require("telescope.builtin").find_files()
-  end, { desc = "Find files" })
+  -- Global mapping with function reference
+  keymap("n", "<leader>ff", require("fzf-lua").files, { desc = "[F]ind [F]iles" })
 
-  -- Buffer-local mapping
-  vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {
-    desc = "Code actions",
-    buffer = bufnr,
-  })
+  -- Buffer-local mapping in LspAttach callback
+  vim.keymap.set("n", "<leader>ih", function()
+    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }), { bufnr = event.buf })
+  end, { desc = "Toggle Inlay Hints", buffer = event.buf })
   ```
 
 ### Autocommands
 
-- Use autocmd groups for organization
-- Clear groups to prevent duplication
+- Use autocmd groups with `{ clear = true }` to prevent duplication
 - Prefer Lua callbacks over Vimscript commands
+- Notable groups in this config: `lsp-attach`, `LspBufferCleanup`, `LspDetach`, `YankHighlight`, `RestoreCursor`, `AutoResize`, `ActiveCursorline`
 - Examples:
 
   ```lua
-  local group = vim.api.nvim_create_augroup("MyGroup", { clear = true })
+  local group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 
-  vim.api.nvim_create_autocmd("BufWritePre", {
+  vim.api.nvim_create_autocmd("TextYankPost", {
     group = group,
-    pattern = "*.lua",
     callback = function()
-      -- Format on save
-      require("stylua").format()
+      vim.highlight.on_yank()
     end,
+    pattern = "*",
   })
   ```
 
 ### LSP Setup
 
-- Set up LSP servers via `vim.lsp.enable()`
-- Configure capabilities and on_attach handlers
-- Use proper error handling
-- Example:
+This config uses Neovim's native `vim.lsp.config` / `vim.lsp.enable` (no nvim-lspconfig plugin).
+
+- **Server configs** live in `lsp/*.lua`, each returning a `vim.lsp.Config` table
+- **Global config** in `lua/config/lsp.lua` sets capabilities and diagnostics for all servers via `vim.lsp.config("*", { ... })`
+- **Enabled servers** are listed in `lua/config/lsp.lua` and activated with `vim.lsp.enable(servers)`
+- Currently enabled: `bashls`, `cue`, `golangci_lint_ls`, `gopls`, `helm_ls`, `lua_ls`, `ruff`, `rust_analyzer`, `tofu_ls`, `tflint`, `ts_ls`, `yamlls`
+- Additional configs exist in `lsp/` but are **not enabled**: `biome`, `terraformls`
+
+#### LSP server config pattern (`lsp/*.lua`):
 
   ```lua
-  vim.lsp.enable({ "lua_ls", "rust_analyzer" })
-
-  vim.lsp.config("*", {
-    capabilities = vim.lsp.protocol.make_client_capabilities(),
-  })
+  ---@type vim.lsp.Config
+  return {
+    cmd = { "gopls" },
+    filetypes = { "go", "gomod", "gowork", "gotmpl" },
+    root_markers = { "go.mod", "go.work", ".git" },
+    settings = {
+      -- server-specific settings
+    },
+  }
   ```
+
+#### Diagnostic config:
+
+  Custom signs (`Error`, `Warn`, `Hint`, `Information`), rounded float borders, virtual text with `●` prefix, severity sorting enabled.
 
 ## Best Practices & Patterns
 
@@ -305,14 +388,16 @@ This section covers essential tools and modern CLI utilities for maintaining cod
 
 ### Plugin Integration
 
-- Check plugin availability before using
+- Check plugin availability before using with `pcall`
 - Provide fallbacks for optional dependencies
 - Use lazy loading when possible
 - Example:
   ```lua
-  if vim.fn.exists(":Telescope") == 2 then
-    -- Telescope is available
-    require("telescope").setup()
+  -- Safe require pattern
+  local ok, fzf = pcall(require, "fzf-lua")
+  if not ok then
+    vim.notify("fzf-lua not available", vim.log.levels.WARN)
+    return
   end
   ```
 
@@ -334,12 +419,6 @@ This section covers essential tools and modern CLI utilities for maintaining cod
     -- Apply configuration
   end
   ```
-
-### Web Content Fetching
-
-- When fetching content from GitHub using webfetch, use raw content URLs instead of blob URLs for better accessibility
-- Convert blob URLs to raw URLs by replacing `github.com/user/repo/blob/branch/file` with `raw.githubusercontent.com/user/repo/branch/file`
-- Example: `https://github.com/codecrafters-io/build-your-own-x/blob/master/README.md` → `https://raw.githubusercontent.com/codecrafters-io/build-your-own-x/master/README.md`
 
 ## Security Considerations
 
@@ -374,20 +453,32 @@ This section covers essential tools and modern CLI utilities for maintaining cod
 ### Stylua (Formatting)
 
 - Configuration in `.stylua.toml`
-- 2-space indentation, 120-character width
-- Double quotes preferred
+- `indent_width = 2`, `indent_type = "Spaces"`, `column_width = 120`
+- `quote_style = "AutoPreferDouble"` — auto-detects, prefers double quotes
 - Run `stylua --check .` to verify formatting
 
 ### Selene (Linting)
 
 - Configuration in `selene.toml`
-- Allows `undefined_variable` (vim globals)
-- Allows `mixed_table` for flexibility
+- `undefined_variable = "allow"` — needed for `vim` global
+- `mixed_table = "allow"` — flexibility for plugin spec tables
 - Run `selene lua/` for full codebase linting
 
 ### Lazy.nvim (Plugin Management)
 
-- Plugin specs in `lua/plugins/*.lua`
-- Use lazy loading for performance
+- Plugin specs in `lua/plugins/*.lua` — auto-imported via `{ import = "plugins" }`
+- Default: `lazy = false` (eager loading) — override per-plugin as needed
+- Many built-in Neovim plugins disabled for performance (netrw, matchit, zip, tar, etc.)
 - Specify dependencies explicitly
-- Example spec structure ensures proper loading order
+- Plugin versions locked in `lazy-lock.json`
+
+### Custom User Commands (monitoring.lua)
+
+- `:AutocmdStats` — shows total autocmd count and groups with >1 autocmd
+- `:MemoryStats` — shows autocmd, namespace, and buffer counts
+- `:MemoryDetailed` — full stats: Lua memory (MB), top autocmd groups (>3), totals
+
+### Conform.nvim (Formatting on Save)
+
+- Configured in `lua/plugins/text.lua`
+- Provides per-filetype formatter integration (distinct from stylua which is Lua-only)
