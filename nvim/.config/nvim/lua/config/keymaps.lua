@@ -105,6 +105,12 @@ keymap("n", "<leader>tr", function()
   local new_name = vim.fn.input("Tab name: ")
   if new_name ~= "" then
     vim.t.tab_name = new_name
+
+    local names = vim.g.tab_names or {}
+    local tab_nr = vim.api.nvim_get_current_tabpage()
+    names[tostring(tab_nr)] = new_name
+    vim.g.tab_names = names
+
     vim.cmd("redrawtabline")
   end
 end, { desc = "Rename Tab" })
