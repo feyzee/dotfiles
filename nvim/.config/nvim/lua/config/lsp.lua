@@ -58,14 +58,15 @@ vim.lsp.config("*", {
 local servers = {
   "bashls",
   "cue",
-  "golangci_lint_ls",
+  -- "golangci_lint_ls",
   "gopls",
   "helm_ls",
   "lua_ls",
-  "ruff",
+  "pyrefly",
+  -- "ruff",
   "rust_analyzer",
   "tofu_ls",
-  "tflint",
+  -- "tflint",
   "ts_ls",
   "yamlls",
 }
