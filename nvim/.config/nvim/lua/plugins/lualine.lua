@@ -10,7 +10,7 @@ return {
       disabled_filetypes = { "mason", "lazy", "NvimTree", "neo-tree", "gitsigns-blame", "quickfix", "prompt" },
       globalstatus = true,
       section_separators = { left = "", right = "" },
-      theme = "tokyonight",
+      theme = "auto",
     },
     sections = {
       lualine_a = {
