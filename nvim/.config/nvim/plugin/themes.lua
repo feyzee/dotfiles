@@ -1,12 +1,14 @@
 vim.pack.add({
   src = "https://github.com/folke/tokyonight.nvim",
-  name = "catppuccin",
+  name = "tokyonight",
 })
 
 vim.pack.add({
   src = "https://github.com/catppuccin/nvim",
   name = "catppuccin",
 })
+
+require("tokyonight").setup()
 
 require("catppuccin").setup({
   flavour = "macchiato",
