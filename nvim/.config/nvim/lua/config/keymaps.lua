@@ -89,7 +89,7 @@ keymap("n", "<A-Down>", "<Esc>:m .+1<CR>==", opts)
 -- Neotree removed - using mini.files instead (bound to <leader>bf)
 
 -- Mini.files
--- keymap("n", "<leader>e", require("mini.files").open(vim.api.nvim_buf_get_name(0), true), opts)
+keymap("n", "<leader>bf", require("mini.files").open(vim.fn.getcwd(), true), { desc = "Open mini.files (cwd)" })
 
 -- Terraform
 keymap("n", "<leader>tfv", ":!terraform validate<CR>", opts)
@@ -114,3 +114,25 @@ keymap("n", "<leader>tr", function()
     vim.cmd("redrawtabline")
   end
 end, { desc = "Rename Tab" })
+
+-- Flash.nvim
+keymap({ "n", "x", "o" }, "<leader>\\", function()
+  require("flash").jump()
+end, { desc = "Flash" })
+
+keymap({ "n", "x", "o" }, "\\", function()
+  require("flash").treesitter()
+end, { desc = "Flash Treesitter" })
+
+keymap("c", "<c-s>", function()
+  require("flash").toggle()
+end, { desc = "Toggle Flash Search" })
+
+keymap({ "n", "x", "o" }, "<c-space>", function()
+  require("flash").treesitter({
+    actions = {
+      ["<c-space>"] = "next",
+      ["<BS>"] = "prev",
+    },
+  })
+end, { desc = "Treesitter Incremental Selection" })
