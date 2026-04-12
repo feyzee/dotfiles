@@ -1,3 +1,5 @@
+local keymap = vim.keymap.set
+
 vim.pack.add({
   src = "https://github.com/folke/snacks.nvim",
 })
@@ -50,8 +52,6 @@ require("snacks.nvim").setup({
   words = { enabled = true },
   zen = { enabled = true },
 })
-
-local keymap = vim.keymap.set
 
 keymap("n", "<leader>n", function()
   Snacks.notifier.show_history()

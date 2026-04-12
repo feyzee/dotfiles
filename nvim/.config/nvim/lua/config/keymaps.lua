@@ -39,12 +39,12 @@ keymap("n", "gl", vim.diagnostic.open_float, { desc = "Show Diagnostics in Float
 keymap("n", "gqf", vim.diagnostic.setloclist, { desc = "Show Diagnostics in Quickfix Window" })
 
 -- Fzf-Lua
-keymap("n", "<leader><space>", require("fzf-lua").buffers, { desc = "[ ] Find existing buffers" })
-keymap("n", "<leader>ff", require("fzf-lua").files, { desc = "[F]Find [F]iles" })
-keymap("n", "<leader>fg", require("fzf-lua").live_grep, { desc = "[F]ind using [G]rep in current project" })
-keymap("n", "<leader>/", require("fzf-lua").grep_curbuf, { desc = "Grep in current buffer" })
-keymap("n", "<leader>fw", require("fzf-lua").grep_cword, { desc = "Grep Words under cursor" })
-keymap("v", "<leader>fw", require("fzf-lua").grep_visual, { desc = "Grep Words selected using Visual Mode" })
+-- keymap("n", "<leader><space>", require("fzf-lua").buffers, { desc = "[ ] Find existing buffers" })
+-- keymap("n", "<leader>ff", require("fzf-lua").files, { desc = "[F]Find [F]iles" })
+-- keymap("n", "<leader>fg", require("fzf-lua").live_grep, { desc = "[F]ind using [G]rep in current project" })
+-- keymap("n", "<leader>/", require("fzf-lua").grep_curbuf, { desc = "Grep in current buffer" })
+-- keymap("n", "<leader>fw", require("fzf-lua").grep_cword, { desc = "Grep Words under cursor" })
+-- keymap("v", "<leader>fw", require("fzf-lua").grep_visual, { desc = "Grep Words selected using Visual Mode" })
 keymap("n", "<leader>ftd", function()
   require("fzf-lua").grep({ search = "TODO|HACK|PERF|NOTE|FIX|FIXME", no_esc = true })
 end, { desc = "Grep for TODO comments" })
