@@ -7,15 +7,14 @@ set -Ux FZF_FIND_FILE_COMMAND 'fd --type file --folloe --color=always --hidden -
 set -Ux FZF_PREVIEW_DIR_CMD ls
 set -Ux FZF_DEFAULT_OPTS '-m --height=70% --preview="bat --theme 1337 {}" --preview-window=right:60%:wrap'
 
-
 # TODO: add conditional
-if test (uname -a) = "Darwin"
+if test (uname -a) = Darwin
     set -Ux EDITOR /opt/homebrew/bin/nvim
 else
     set -Ux EDITOR /usr/bin/nvim
 end
 
-fish_config theme choose Catppuccin\ Macchiato
+fish_config theme choose catppuccin-macchiato
 
 # add folders to $PATH
 fish_add_path ~/.local/bin
