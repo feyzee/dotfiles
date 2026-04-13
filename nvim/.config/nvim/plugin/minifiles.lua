@@ -1,6 +1,5 @@
 vim.pack.add({
-  src = "https://github.com/nvim-mini/mini.files",
-  version = "*",
+  "https://github.com/nvim-mini/mini.files",
 })
 
 require("mini.files").setup({
@@ -56,3 +55,6 @@ require("mini.files").setup({
     width_preview = 25,
   },
 })
+
+-- Key mappings
+vim.keymap.set("n", "<leader>bf", "<Cmd>lua MiniFiles.open(vim.api.nvim_buf_get_name(0))<CR>", { desc = "Open mini.files (cwd)" })

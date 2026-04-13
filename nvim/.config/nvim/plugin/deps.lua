@@ -1,9 +1,7 @@
 -- This file contains all the dependecies used by other plugins
+local github = "https://github.com/"
 
 vim.pack.add({
-  src = "https://github.com/saghen/blink.compat",
-})
-
-vim.pack.add({
-  src = "https://github.com/rafamadriz/friendly-snippets",
+  github .. "saghen/blink.compat",
+  github .. "rafamadriz/friendly-snippets",
 })

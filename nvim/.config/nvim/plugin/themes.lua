@@ -1,14 +1,19 @@
-vim.pack.add({
-  src = "https://github.com/folke/tokyonight.nvim",
-  name = "tokyonight",
-})
+local github = "https://github.com/"
 
 vim.pack.add({
-  src = "https://github.com/catppuccin/nvim",
-  name = "catppuccin",
+  {
+    src = github .. "folke/tokyonight.nvim",
+  },
+  {
+    src = github .. "catppuccin/nvim",
+    name = "catppuccin",
+  },
 })
 
-require("tokyonight").setup()
+-- require("tokyonight").setup()
+-- vim.cmd.packadd("tokyonight")
+-- vim.cmd([[packadd tokyonight.nvim]])
+-- vim.pack.load("tokyonight.nvim")
 
 require("catppuccin").setup({
   flavour = "macchiato",
@@ -66,3 +71,5 @@ require("catppuccin").setup({
     },
   },
 })
+
+vim.cmd.colorscheme("tokyonight")

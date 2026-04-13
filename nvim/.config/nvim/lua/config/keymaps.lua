@@ -1,3 +1,6 @@
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
@@ -45,35 +48,35 @@ keymap("n", "gqf", vim.diagnostic.setloclist, { desc = "Show Diagnostics in Quic
 -- keymap("n", "<leader>/", require("fzf-lua").grep_curbuf, { desc = "Grep in current buffer" })
 -- keymap("n", "<leader>fw", require("fzf-lua").grep_cword, { desc = "Grep Words under cursor" })
 -- keymap("v", "<leader>fw", require("fzf-lua").grep_visual, { desc = "Grep Words selected using Visual Mode" })
-keymap("n", "<leader>ftd", function()
-  require("fzf-lua").grep({ search = "TODO|HACK|PERF|NOTE|FIX|FIXME", no_esc = true })
-end, { desc = "Grep for TODO comments" })
-
-keymap("n", "<leader>fm", require("fzf-lua").marks, { desc = "[F]ind [M]arks" })
-keymap("n", "<leader>fr", require("fzf-lua").registers, { desc = "[Find] in [R]egisters" })
-keymap("n", "<leader>fq", require("fzf-lua").grep_quickfix, { desc = "[Find] in [Q]uickfix list" })
-keymap("n", "<leader>km", require("fzf-lua").keymaps, { desc = "Find in [K]ey[M]aps" })
-keymap("n", "<leader>nh", require("fzf-lua").help_tags, { desc = "Show [N]eovim [H]elp" })
-
--- Fzf-Lua Git
-keymap("n", "<leader>gbr", require("fzf-lua").git_branches, { desc = "Show [G]it [BR]anches" })
-keymap("n", "<leader>gbl", require("fzf-lua").git_blame, { desc = "Show [G]it [BL]lame for buffer" })
-keymap("n", "<leader>gcp", require("fzf-lua").git_commits, { desc = "Show [G]it [C]ommits in [P]roject" })
-keymap("n", "<leader>gcb", require("fzf-lua").git_bcommits, { desc = "Show [G]it [C]ommits in [B]uffer" })
-keymap("n", "<leader>gst", require("fzf-lua").git_status, { desc = "Show [G]it [ST]atus" })
-keymap("n", "<leader>gdf", require("fzf-lua").git_diff, { desc = "Show [G]it [D]if[F]" })
-
--- Fzf-Lua LSP
-keymap("n", "<leader>ldf", require("fzf-lua").lsp_definitions, { desc = "[L]SP [D]e[F]initions" })
-keymap("n", "<leader>lrf", require("fzf-lua").lsp_references, { desc = "[L]SP [R]e[F]erences" })
-keymap("n", "<leader>ldc", require("fzf-lua").lsp_declarations, { desc = "[L]SP [D]e[c]larations" })
-keymap("n", "<leader>limp", require("fzf-lua").lsp_implementations, { desc = "[L]SP [IMP]lementations" })
-keymap("n", "<leader>lds", require("fzf-lua").lsp_document_symbols, { desc = "[L]SP [D]ocument [S]ymbols" })
-keymap("n", "<leader>lws", require("fzf-lua").lsp_workspace_symbols, { desc = "[L]SP [W]orkspace [S]ymbols" })
-keymap("n", "<leader>ldd", require("fzf-lua").lsp_document_diagnostics, { desc = "[L]SP [D]ocument [D]iagnostics" })
-keymap("n", "<leader>lwd", require("fzf-lua").lsp_workspace_diagnostics, { desc = "[L]SP [W]orkspace [D]iagnostics" })
-keymap("n", "<leader>lca", require("fzf-lua").lsp_code_actions, { desc = "[L]SP [C]ode [A]ctions" })
-
+-- keymap("n", "<leader>ftd", function()
+--   require("fzf-lua").grep({ search = "TODO|HACK|PERF|NOTE|FIX|FIXME", no_esc = true })
+-- end, { desc = "Grep for TODO comments" })
+--
+-- keymap("n", "<leader>fm", require("fzf-lua").marks, { desc = "[F]ind [M]arks" })
+-- keymap("n", "<leader>fr", require("fzf-lua").registers, { desc = "[Find] in [R]egisters" })
+-- keymap("n", "<leader>fq", require("fzf-lua").grep_quickfix, { desc = "[Find] in [Q]uickfix list" })
+-- keymap("n", "<leader>km", require("fzf-lua").keymaps, { desc = "Find in [K]ey[M]aps" })
+-- keymap("n", "<leader>nh", require("fzf-lua").help_tags, { desc = "Show [N]eovim [H]elp" })
+--
+-- -- Fzf-Lua Git
+-- keymap("n", "<leader>gbr", require("fzf-lua").git_branches, { desc = "Show [G]it [BR]anches" })
+-- keymap("n", "<leader>gbl", require("fzf-lua").git_blame, { desc = "Show [G]it [BL]lame for buffer" })
+-- keymap("n", "<leader>gcp", require("fzf-lua").git_commits, { desc = "Show [G]it [C]ommits in [P]roject" })
+-- keymap("n", "<leader>gcb", require("fzf-lua").git_bcommits, { desc = "Show [G]it [C]ommits in [B]uffer" })
+-- keymap("n", "<leader>gst", require("fzf-lua").git_status, { desc = "Show [G]it [ST]atus" })
+-- keymap("n", "<leader>gdf", require("fzf-lua").git_diff, { desc = "Show [G]it [D]if[F]" })
+--
+-- -- Fzf-Lua LSP
+-- keymap("n", "<leader>ldf", require("fzf-lua").lsp_definitions, { desc = "[L]SP [D]e[F]initions" })
+-- keymap("n", "<leader>lrf", require("fzf-lua").lsp_references, { desc = "[L]SP [R]e[F]erences" })
+-- keymap("n", "<leader>ldc", require("fzf-lua").lsp_declarations, { desc = "[L]SP [D]e[c]larations" })
+-- keymap("n", "<leader>limp", require("fzf-lua").lsp_implementations, { desc = "[L]SP [IMP]lementations" })
+-- keymap("n", "<leader>lds", require("fzf-lua").lsp_document_symbols, { desc = "[L]SP [D]ocument [S]ymbols" })
+-- keymap("n", "<leader>lws", require("fzf-lua").lsp_workspace_symbols, { desc = "[L]SP [W]orkspace [S]ymbols" })
+-- keymap("n", "<leader>ldd", require("fzf-lua").lsp_document_diagnostics, { desc = "[L]SP [D]ocument [D]iagnostics" })
+-- keymap("n", "<leader>lwd", require("fzf-lua").lsp_workspace_diagnostics, { desc = "[L]SP [W]orkspace [D]iagnostics" })
+-- keymap("n", "<leader>lca", require("fzf-lua").lsp_code_actions, { desc = "[L]SP [C]ode [A]ctions" })
+--
 -- Window management
 keymap("n", "<C-h>", "<C-w>h", opts)
 keymap("n", "<C-j>", "<C-w>j", opts)
@@ -85,11 +88,6 @@ keymap("n", "<S-Left>", ":vertical resize +2<CR>", opts)
 -- Text
 keymap("n", "<A-Up>", "<Esc>:m .-2<CR>==", opts)
 keymap("n", "<A-Down>", "<Esc>:m .+1<CR>==", opts)
-
--- Neotree removed - using mini.files instead (bound to <leader>bf)
-
--- Mini.files
-keymap("n", "<leader>bf", require("mini.files").open(vim.fn.getcwd(), true), { desc = "Open mini.files (cwd)" })
 
 -- Terraform
 keymap("n", "<leader>tfv", ":!terraform validate<CR>", opts)

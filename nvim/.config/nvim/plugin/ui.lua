@@ -1,23 +1,12 @@
 local keymap = vim.keymap.set
+local github = "https://github.com/"
 
 vim.pack.add({
-  src = "https://github.com/MunifTanjim/nui.nvim",
-})
-
-vim.pack.add({
-  src = "https://github.com/nvim-lua/plenary.nvim",
-})
-
-vim.pack.add({
-  src = "https://github.com/nvim-mini/mini.icons",
-})
-
-vim.pack.add({
-  src = "https://github.com/folke/noice.nvim",
-})
-
-vim.pack.add({
-  src = "https://github.com/folke/which-key.nvim",
+  github .. "MunifTanjim/nui.nvim",
+  github .. "nvim-lua/plenary.nvim",
+  github .. "nvim-mini/mini.icons",
+  github .. "folke/noice.nvim",
+  github .. "folke/which-key.nvim",
 })
 
 require("mini.icons").setup({
@@ -48,7 +37,7 @@ require("mini.icons").setup({
   },
 })
 
-require("noice.nvim").setup({
+require("noice").setup({
   lsp = {
     override = {
       ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
@@ -79,7 +68,7 @@ require("noice.nvim").setup({
   },
 })
 
-require("which-key.nvim").setup({
+require("which-key").setup({
   preset = "helix",
   defaults = {},
   spec = {

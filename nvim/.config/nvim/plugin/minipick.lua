@@ -1,10 +1,8 @@
-local keymap = vim.keymap.set
-
 vim.pack.add({
-  src = "https://github.com/nvim-mini/mini.pick",
+  "https://github.com/nvim-mini/mini.pick",
 })
 
-require("mini.pick").require({
+require("mini.pick").setup({
   -- Delays (in ms; should be at least 1)
   delay = {
     -- Delay between forcing asynchronous behavior
@@ -89,13 +87,13 @@ require("mini.pick").require({
   },
 })
 
-keymap("n", "<leader><leader>", "<Cmd>Pick buffers<CR>", { desc = "Buffer Picker" })
-keymap("n", "<leader>ff", "<Cmd>Pick files<CR>", { desc = "Files Picker" })
-keymap("n", "<leader>fg", "<Cmd>Pick grep_live<CR>", { desc = "Live Grep Workspace" })
-keymap("n", "<leader>fw", "<Cmd>Pick grep pattern='<cword>'<CR>", { desc = "Grep current word" })
-keymap("v", "<leader>fw", "<Cmd>Pick grep pattern='<cword>'<CR>", { desc = "Grep current word (while in visual mode)" })
-keymap("n", "<leader>/", "Pick buf_lines scope='current'", { desc = "Grep current buffer" })
-keymap("n", "<leader>n", "<Cmd>Pick buffers<CR>", { desc = "Buffer Picker" })
-keymap("n", "<leader>n", "<Cmd>Pick buffers<CR>", { desc = "Buffer Picker" })
-keymap("n", "<leader>n", "<Cmd>Pick buffers<CR>", { desc = "Buffer Picker" })
-keymap("n", "<leader>n", "<Cmd>Pick buffers<CR>", { desc = "Buffer Picker" })
+vim.keymap.set("n", "<leader><leader>", "<Cmd>Pick buffers<CR>", { desc = "Buffer Picker" })
+vim.keymap.set("n", "<leader>ff", "<Cmd>Pick files<CR>", { desc = "Files Picker" })
+vim.keymap.set("n", "<leader>fg", "<Cmd>Pick grep_live<CR>", { desc = "Live Grep Workspace" })
+vim.keymap.set("n", "<leader>fw", "<Cmd>Pick grep pattern='<cword>'<CR>", { desc = "Grep current word" })
+vim.keymap.set("v", "<leader>fw", "<Cmd>Pick grep pattern='<cword>'<CR>", { desc = "Grep current word (while in visual mode)" })
+vim.keymap.set("n", "<leader>/", "Pick buf_lines scope='current'", { desc = "Grep current buffer" })
+vim.keymap.set("n", "<leader>n", "<Cmd>Pick buffers<CR>", { desc = "Buffer Picker" })
+vim.keymap.set("n", "<leader>n", "<Cmd>Pick buffers<CR>", { desc = "Buffer Picker" })
+vim.keymap.set("n", "<leader>n", "<Cmd>Pick buffers<CR>", { desc = "Buffer Picker" })
+vim.keymap.set("n", "<leader>n", "<Cmd>Pick buffers<CR>", { desc = "Buffer Picker" })

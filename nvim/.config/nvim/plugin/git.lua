@@ -1,22 +1,15 @@
-vim.pack.add({
-  src = "https://github.com/lewis6991/gitsigns.nvim",
-})
-
--- vim.pack.add({
---   src = "https://github.com/sindrets/diffview.nvim",
--- })
---
--- vim.pack.add({
---   src = "https://github.com/akinsho/git-conflict.nvim",
--- })
+local github = "https://github.com/"
 
 vim.pack.add({
-  src = "https://github.com/nvim-mini/mini.diff",
+  github .. "lewis6991/gitsigns.nvim",
+  github .. "nvim-mini/mini.diff",
+  -- github .. "sindrets/diffview.nvim",
+  -- github .. "akinsho/git-conflict.nvim",
 })
 
 require("mini.diff").setup({})
 
-require("gitsigns.nvim").setup({
+require("gitsigns").setup({
   signs = {
     add = { hl = "DiffAdd", text = "│", numhl = "GitSignsAddNr" },
     change = { hl = "DiffChange", text = "│", numhl = "GitSignsChangeNr" },

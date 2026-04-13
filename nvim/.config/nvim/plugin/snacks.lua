@@ -1,10 +1,8 @@
-local keymap = vim.keymap.set
-
 vim.pack.add({
-  src = "https://github.com/folke/snacks.nvim",
+  "https://github.com/folke/snacks.nvim",
 })
 
-require("snacks.nvim").setup({
+require("Snacks").setup({
   bigfile = { enabled = true },
   dashboard = {
     enabled = true,
@@ -53,38 +51,38 @@ require("snacks.nvim").setup({
   zen = { enabled = true },
 })
 
-keymap("n", "<leader>n", function()
+vim.keymap.set("n", "<leader>n", function()
   Snacks.notifier.show_history()
 end, { desc = "Notification History" })
 
-keymap("n", "<leader>un", function()
+vim.keymap.set("n", "<leader>un", function()
   Snacks.notifier.hide()
 end, { desc = "Dismiss All Notifications" })
 
-keymap("n", "<leader>bd", function()
+vim.keymap.set("n", "<leader>bd", function()
   Snacks.bufdelete()
 end, { desc = "Delete Buffer" })
 
-keymap("n", "<leader>gg", function()
+vim.keymap.set("n", "<leader>gg", function()
   Snacks.lazygit()
 end, { desc = "Lazygit" })
 
-keymap("n", "<leader>gw", function()
+vim.keymap.set("n", "<leader>gw", function()
   Snacks.gitbrowse()
 end, { desc = "Git Browse" })
 
-keymap("n", "<leader>gf", function()
+vim.keymap.set("n", "<leader>gf", function()
   Snacks.lazygit.log_file()
 end, { desc = "Lazygit Current File History" })
 
-keymap("n", "<leader>gl", function()
+vim.keymap.set("n", "<leader>gl", function()
   Snacks.lazygit.log()
 end, { desc = "Lazygit Log (Cwd)" })
 
-keymap("n", "<leader>cR", function()
+vim.keymap.set("n", "<leader>cR", function()
   Snacks.rename.rename_file()
 end, { desc = "Rename File" })
 
-keymap("n", "<c-/>", function()
+vim.keymap.set("n", "<c-/>", function()
   Snacks.terminal()
 end, { desc = "Toggle Terminal" })

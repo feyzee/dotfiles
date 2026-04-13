@@ -38,6 +38,9 @@ vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
 
+-- vim.cmd.colorscheme("catppuccin")
+-- vim.pack.add({ "https://github.com/folke/tokyonight.nvim" })
+-- vim.pack.load("tokyonight.nvim")
 -- vim.cmd.colorscheme("tokyonight")
 vim.api.nvim_set_option_value("colorcolumn", "79", {})
 
@@ -47,3 +50,4 @@ vim.opt.timeoutlen = 500
 vim.opt.confirm = true
 vim.opt.laststatus = 3
 vim.opt.sessionoptions = "buffers,curdir,tabpages,winsize,help,globals,skiprtp,folds,resize"
+

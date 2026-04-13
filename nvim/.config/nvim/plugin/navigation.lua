@@ -1,5 +1,5 @@
 vim.pack.add({
-  src = "https://github.com/folke/flash.nvim",
+  "https://github.com/folke/flash.nvim",
 })
 
-require("flash.nvim").setup()
+require("flash").setup()

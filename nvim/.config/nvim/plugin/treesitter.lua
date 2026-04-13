@@ -10,7 +10,9 @@ vim.api.nvim_create_autocmd("PackChanged", {
   end,
 })
 
-vim.pack.add({
-  src = "https://github.com/nvim-treesitter/nvim-treesitter",
-  version = vim.version.range("0.12.x"),
-})
+-- vim.pack.add({
+--   {
+--     src = "https://github.com/nvim-treesitter/nvim-treesitter",
+--     version = "v0.12.*",
+--   },
+-- })
