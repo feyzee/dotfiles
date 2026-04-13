@@ -39,12 +39,12 @@ keymap("n", "gl", vim.diagnostic.open_float, { desc = "Show Diagnostics in Float
 keymap("n", "gqf", vim.diagnostic.setloclist, { desc = "Show Diagnostics in Quickfix Window" })
 
 -- Fzf-Lua
-keymap("n", "<leader><space>", require("fzf-lua").buffers, { desc = "[ ] Find existing buffers" })
-keymap("n", "<leader>ff", require("fzf-lua").files, { desc = "[F]Find [F]iles" })
-keymap("n", "<leader>fg", require("fzf-lua").live_grep, { desc = "[F]ind using [G]rep in current project" })
-keymap("n", "<leader>/", require("fzf-lua").grep_curbuf, { desc = "Grep in current buffer" })
-keymap("n", "<leader>fw", require("fzf-lua").grep_cword, { desc = "Grep Words under cursor" })
-keymap("v", "<leader>fw", require("fzf-lua").grep_visual, { desc = "Grep Words selected using Visual Mode" })
+-- keymap("n", "<leader><space>", require("fzf-lua").buffers, { desc = "[ ] Find existing buffers" })
+-- keymap("n", "<leader>ff", require("fzf-lua").files, { desc = "[F]Find [F]iles" })
+-- keymap("n", "<leader>fg", require("fzf-lua").live_grep, { desc = "[F]ind using [G]rep in current project" })
+-- keymap("n", "<leader>/", require("fzf-lua").grep_curbuf, { desc = "Grep in current buffer" })
+-- keymap("n", "<leader>fw", require("fzf-lua").grep_cword, { desc = "Grep Words under cursor" })
+-- keymap("v", "<leader>fw", require("fzf-lua").grep_visual, { desc = "Grep Words selected using Visual Mode" })
 keymap("n", "<leader>ftd", function()
   require("fzf-lua").grep({ search = "TODO|HACK|PERF|NOTE|FIX|FIXME", no_esc = true })
 end, { desc = "Grep for TODO comments" })
@@ -114,3 +114,29 @@ keymap("n", "<leader>tr", function()
     vim.cmd("redrawtabline")
   end
 end, { desc = "Rename Tab" })
+
+-- mini.pick
+keymap("n", "<leader><leader>", "<Cmd>Pick buffers<CR>", { desc = "[ ] Find existing buffers" })
+keymap("n", "<leader>ff", "<Cmd>Pick files<CR>", { desc = "[F]Find [F]iles" })
+keymap("n", "<leader>fg", "<Cmd>Pick grep_live<CR>", { desc = "[F]ind using [G]rep in current project" })
+keymap("n", "<leader>fw", "<Cmd>Pick grep pattern='<cword>'<CR>", { desc = "Grep Words under cursor" })
+keymap("v", "<leader>fw", "<Cmd>Pick grep pattern='<cword>'<CR>", { desc = "Grep Words selected using Visual Mode" })
+
+local grep_buffer = function()
+  local current_file = vim.fn.expand("%:p") -- Get absolute path of current file
+  if current_file == "" then
+    vim.notify("Buffer has no file name", vim.log.levels.WARN)
+    return
+  end
+
+  -- We call grep_live and pass the file path as an extra argument
+  MiniPick.builtin.grep_live({
+    tool = "rg", -- ensures we're using ripgrep
+    args = { current_file },
+  }, {
+    source = { name = "Grep Buffer" },
+  })
+end
+
+-- Example Keymap
+keymap("n", "<leader>/", grep_buffer, { desc = "Grep current buffer" })
