@@ -38,8 +38,7 @@ vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
 
-
-vim.cmd([[colorscheme tokyonight]])
+-- vim.cmd.colorscheme("tokyonight")
 vim.api.nvim_set_option_value("colorcolumn", "79", {})
 
 -- Set completeopt to have a better completion experience
