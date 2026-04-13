@@ -92,8 +92,42 @@ vim.keymap.set("n", "<leader>ff", "<Cmd>Pick files<CR>", { desc = "Files Picker"
 vim.keymap.set("n", "<leader>fg", "<Cmd>Pick grep_live<CR>", { desc = "Live Grep Workspace" })
 vim.keymap.set("n", "<leader>fw", "<Cmd>Pick grep pattern='<cword>'<CR>", { desc = "Grep current word" })
 vim.keymap.set("v", "<leader>fw", "<Cmd>Pick grep pattern='<cword>'<CR>", { desc = "Grep current word (while in visual mode)" })
-vim.keymap.set("n", "<leader>/", "Pick buf_lines scope='current'", { desc = "Grep current buffer" })
+vim.keymap.set("n", "<leader>/", "<Cmd>Pick buf_lines scope='current'<CR>", { desc = "Grep current buffer" })
 vim.keymap.set("n", "<leader>n", "<Cmd>Pick buffers<CR>", { desc = "Buffer Picker" })
 vim.keymap.set("n", "<leader>n", "<Cmd>Pick buffers<CR>", { desc = "Buffer Picker" })
 vim.keymap.set("n", "<leader>n", "<Cmd>Pick buffers<CR>", { desc = "Buffer Picker" })
 vim.keymap.set("n", "<leader>n", "<Cmd>Pick buffers<CR>", { desc = "Buffer Picker" })
+
+vim.keymap.set("n", "<leader>/", function()
+  MiniPick.builtin.buf_lines()
+end, { desc = "Search current buffer" })
+
+-- TODO: migrate Fzf-Lua keymaps
+-- vim.keymap.set("n", "<leader>ftd", function()
+--   require("fzf-lua").grep({ search = "TODO|HACK|PERF|NOTE|FIX|FIXME", no_esc = true })
+-- end, { desc = "Grep for TODO comments" })
+--
+-- vim.keymap.set("n", "<leader>fm", require("fzf-lua").marks, { desc = "[F]ind [M]arks" })
+-- vim.keymap.set("n", "<leader>fr", require("fzf-lua").registers, { desc = "[Find] in [R]egisters" })
+-- vim.keymap.set("n", "<leader>fq", require("fzf-lua").grep_quickfix, { desc = "[Find] in [Q]uickfix list" })
+-- vim.keymap.set("n", "<leader>km", require("fzf-lua").vim.keymap.sets, { desc = "Find in [K]ey[M]aps" })
+-- vim.keymap.set("n", "<leader>nh", require("fzf-lua").help_tags, { desc = "Show [N]eovim [H]elp" })
+--
+-- -- Fzf-Lua Git
+-- vim.keymap.set("n", "<leader>gbr", require("fzf-lua").git_branches, { desc = "Show [G]it [BR]anches" })
+-- vim.keymap.set("n", "<leader>gbl", require("fzf-lua").git_blame, { desc = "Show [G]it [BL]lame for buffer" })
+-- vim.keymap.set("n", "<leader>gcp", require("fzf-lua").git_commits, { desc = "Show [G]it [C]ommits in [P]roject" })
+-- vim.keymap.set("n", "<leader>gcb", require("fzf-lua").git_bcommits, { desc = "Show [G]it [C]ommits in [B]uffer" })
+-- vim.keymap.set("n", "<leader>gst", require("fzf-lua").git_status, { desc = "Show [G]it [ST]atus" })
+-- vim.keymap.set("n", "<leader>gdf", require("fzf-lua").git_diff, { desc = "Show [G]it [D]if[F]" })
+--
+-- -- Fzf-Lua LSP
+-- vim.keymap.set("n", "<leader>ldf", require("fzf-lua").lsp_definitions, { desc = "[L]SP [D]e[F]initions" })
+-- vim.keymap.set("n", "<leader>lrf", require("fzf-lua").lsp_references, { desc = "[L]SP [R]e[F]erences" })
+-- vim.keymap.set("n", "<leader>ldc", require("fzf-lua").lsp_declarations, { desc = "[L]SP [D]e[c]larations" })
+-- vim.keymap.set("n", "<leader>limp", require("fzf-lua").lsp_implementations, { desc = "[L]SP [IMP]lementations" })
+-- vim.keymap.set("n", "<leader>lds", require("fzf-lua").lsp_document_symbols, { desc = "[L]SP [D]ocument [S]ymbols" })
+-- vim.keymap.set("n", "<leader>lws", require("fzf-lua").lsp_workspace_symbols, { desc = "[L]SP [W]orkspace [S]ymbols" })
+-- vim.keymap.set("n", "<leader>ldd", require("fzf-lua").lsp_document_diagnostics, { desc = "[L]SP [D]ocument [D]iagnostics" })
+-- vim.keymap.set("n", "<leader>lwd", require("fzf-lua").lsp_workspace_diagnostics, { desc = "[L]SP [W]orkspace [D]iagnostics" })
+-- vim.keymap.set("n", "<leader>lca", require("fzf-lua").lsp_code_actions, { desc = "[L]SP [C]ode [A]ctions" })

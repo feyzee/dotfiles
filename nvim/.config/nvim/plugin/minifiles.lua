@@ -57,4 +57,6 @@ require("mini.files").setup({
 })
 
 -- Key mappings
-vim.keymap.set("n", "<leader>bf", "<Cmd>lua MiniFiles.open(vim.api.nvim_buf_get_name(0))<CR>", { desc = "Open mini.files (cwd)" })
+vim.keymap.set("n", "<leader>bf", function ()
+  MiniFiles.open(vim.api.nvim_buf_get_name(0))
+end, { desc = "Open mini.files (cwd)" })

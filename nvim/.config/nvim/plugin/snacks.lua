@@ -86,3 +86,7 @@ end, { desc = "Rename File" })
 vim.keymap.set("n", "<c-/>", function()
   Snacks.terminal()
 end, { desc = "Toggle Terminal" })
+
+vim.keymap.set("n", "<leader>.", function()
+  Snacks.scratch()
+end, { desc = "Toggle Scratch Buffer" })
