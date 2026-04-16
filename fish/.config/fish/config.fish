@@ -14,7 +14,7 @@ else
     set -Ux EDITOR /usr/bin/nvim
 end
 
-fish_config theme choose catppuccin-macchiato
+fish_config theme choose 'Snow Day'
 
 # add folders to $PATH
 fish_add_path ~/.local/bin
