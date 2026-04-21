@@ -3,6 +3,12 @@ vim.pack.add({
     src = "https://github.com/saghen/blink.cmp",
     version = vim.version.range("1.x"),
   },
+  {
+    src = "https://github.com/L3MON4D3/LuaSnip",
+    version = vim.version.range("2.x"),
+  },
+  "https://github.com/saghen/blink.compat",
+  "https://github.com/rafamadriz/friendly-snippets",
 })
 
 require("blink.cmp").setup({
@@ -50,8 +56,8 @@ require("blink.cmp").setup({
 
       draw = {
         columns = {
-          { "label", "label_description", gap = 1 },
-          { "kind_icon", "kind", gap = 1 },
+          { "label",     "label_description", gap = 1 },
+          { "kind_icon", "kind",              gap = 1 },
         },
 
         components = {

@@ -1,6 +1,9 @@
 vim.pack.add({
+  "https://github.com/nvim-mini/mini.extra",
   "https://github.com/nvim-mini/mini.pick",
 })
+
+require("mini.extra").setup()
 
 require("mini.pick").setup({
   -- Delays (in ms; should be at least 1)
@@ -91,7 +94,8 @@ vim.keymap.set("n", "<leader><leader>", "<Cmd>Pick buffers<CR>", { desc = "Buffe
 vim.keymap.set("n", "<leader>ff", "<Cmd>Pick files<CR>", { desc = "Files Picker" })
 vim.keymap.set("n", "<leader>fg", "<Cmd>Pick grep_live<CR>", { desc = "Live Grep Workspace" })
 vim.keymap.set("n", "<leader>fw", "<Cmd>Pick grep pattern='<cword>'<CR>", { desc = "Grep current word" })
-vim.keymap.set("v", "<leader>fw", "<Cmd>Pick grep pattern='<cword>'<CR>", { desc = "Grep current word (while in visual mode)" })
+vim.keymap.set("v", "<leader>fw", "<Cmd>Pick grep pattern='<cword>'<CR>",
+  { desc = "Grep current word (while in visual mode)" })
 vim.keymap.set("n", "<leader>/", "<Cmd>Pick buf_lines scope='current'<CR>", { desc = "Grep current buffer" })
 vim.keymap.set("n", "<leader>n", "<Cmd>Pick buffers<CR>", { desc = "Buffer Picker" })
 vim.keymap.set("n", "<leader>n", "<Cmd>Pick buffers<CR>", { desc = "Buffer Picker" })
