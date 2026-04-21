@@ -1,11 +1,9 @@
-local github = "https://github.com/"
-
 vim.pack.add({
-  github .. "nvim-mini/mini.ai",
-  github .. "nvim-mini/mini.pairs",
-  github .. "nvim-mini/mini.surround",
-  github .. "folke/todo-comments.nvim",
-  github .. "stevearc/conform.nvim",
+  "https://github.com/nvim-mini/mini.ai",
+  "https://github.com/nvim-mini/mini.pairs",
+  "https://github.com/nvim-mini/mini.surround",
+  "https://github.com/folke/todo-comments.nvim",
+  "https://github.com/stevearc/conform.nvim",
 })
 
 require("mini.ai").setup({
@@ -16,10 +14,10 @@ require("mini.ai").setup({
       i = { "@block.inner", "@conditional.inner", "@loop.inner" },
     }),
     f = require("mini.ai").gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }), -- function
-    c = require("mini.ai").gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }), -- class
-    t = { "<([%p%w]-)%f[^<%w][^<>]->.-</%1>", "^<.->().*()</[^/]->$" }, -- tags
-    d = { "%f[%d]%d+" }, -- digits
-    e = { -- Word with case
+    c = require("mini.ai").gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }),       -- class
+    t = { "<([%p%w]-)%f[^<%w][^<>]->.-</%1>", "^<.->().*()</[^/]->$" },                           -- tags
+    d = { "%f[%d]%d+" },                                                                          -- digits
+    e = {                                                                                         -- Word with case
       {
         "%u[%l%d]+%f[^%l%d]",
         "%f[%S][%l%d]+%f[^%l%d]",
@@ -35,12 +33,12 @@ require("mini.pairs").setup()
 
 require("mini.surround").setup({
   mappings = {
-    add = "gsa", -- Add surrounding in Normal and Visual modes
-    delete = "gsd", -- Delete surrounding
-    find = "gsf", -- Find surrounding (to the right)
-    find_left = "gsF", -- Find surrounding (to the left)
-    highlight = "gsh", -- Highlight surrounding
-    replace = "gsc", -- Replace surrounding
+    add = "gsa",            -- Add surrounding in Normal and Visual modes
+    delete = "gsd",         -- Delete surrounding
+    find = "gsf",           -- Find surrounding (to the right)
+    find_left = "gsF",      -- Find surrounding (to the left)
+    highlight = "gsh",      -- Highlight surrounding
+    replace = "gsc",        -- Replace surrounding
     update_n_lines = "gsn", -- Update `n_lines`
   },
 })
