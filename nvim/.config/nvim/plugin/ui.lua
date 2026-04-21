@@ -1,13 +1,13 @@
-local keymap = vim.keymap.set
-local github = "https://github.com/"
-
 vim.pack.add({
-  github .. "MunifTanjim/nui.nvim",
-  github .. "nvim-lua/plenary.nvim",
-  github .. "nvim-mini/mini.icons",
-  github .. "folke/noice.nvim",
-  github .. "folke/which-key.nvim",
+  "https://github.com/j-hui/fidget.nvim",
+  "https://github.com/MunifTanjim/nui.nvim",
+  "https://github.com/nvim-lua/plenary.nvim",
+  "https://github.com/nvim-mini/mini.icons",
+  "https://github.com/folke/noice.nvim",
+  "https://github.com/folke/which-key.nvim",
 })
+
+require("fidget").setup()
 
 require("mini.icons").setup({
   default_component_configs = {
@@ -102,39 +102,39 @@ require("which-key").setup({
   },
 })
 
-keymap("n", "<leader>sn", "", { desc = "+noice" })
+vim.keymap.set("n", "<leader>sn", "", { desc = "+noice" })
 
-keymap("c", "<S-Enter>", function()
+vim.keymap.set("c", "<S-Enter>", function()
   require("noice").redirect(vim.fn.getcmdline())
 end, { desc = "Redirect Cmdline" })
 
-keymap("n", "<leader>snl", function()
+vim.keymap.set("n", "<leader>snl", function()
   require("noice").cmd("last")
 end, { desc = "Noice Last Message" })
 
-keymap("n", "<leader>snh", function()
+vim.keymap.set("n", "<leader>snh", function()
   require("noice").cmd("history")
 end, { desc = "Noice History" })
 
-keymap("n", "<leader>sna", function()
+vim.keymap.set("n", "<leader>sna", function()
   require("noice").cmd("all")
 end, { desc = "Noice All" })
 
-keymap("n", "<leader>snd", function()
+vim.keymap.set("n", "<leader>snd", function()
   require("noice").cmd("dismiss")
 end, { desc = "Noice Dismiss" })
 
-keymap("n", "<leader>snp", function()
+vim.keymap.set("n", "<leader>snp", function()
   require("noice").cmd("pick")
 end, { desc = "Noice open in picker" })
 
-keymap({ "i", "n", "s" }, "<c-f>", function()
+vim.keymap.set({ "i", "n", "s" }, "<c-f>", function()
   if not require("noice.lsp").scroll(4) then
     return "<c-f>"
   end
 end, { desc = "Scroll Forward" })
 
-keymap({ "i", "n", "s" }, "<c-f>", function()
+vim.keymap.set({ "i", "n", "s" }, "<c-f>", function()
   if not require("noice.lsp").scroll(-4) then
     return "<c-f>"
   end
