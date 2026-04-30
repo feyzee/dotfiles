@@ -110,6 +110,10 @@ vim.keymap.set("n", "<leader>fb", function()
   MiniExtra.pickers.buf_lines({ scope = "all" })
 end, { desc = "Search all open buffers" })
 
+vim.keymap.set("n", "<leader>km", function()
+  MiniExtra.pickers.keymaps()
+end, { desc = "Search keymaps" })
+
 -- TODO: migrate Fzf-Lua keymaps
 -- vim.keymap.set("n", "<leader>ftd", function()
 --   require("fzf-lua").grep({ search = "TODO|HACK|PERF|NOTE|FIX|FIXME", no_esc = true })
