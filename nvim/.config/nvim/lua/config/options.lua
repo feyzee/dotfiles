@@ -27,21 +27,26 @@ vim.opt.updatetime = 1000
 vim.opt.signcolumn = "auto"
 vim.opt.termguicolors = true
 vim.opt.hlsearch = false
+vim.opt.winborder = "rounded"
 
 -- splits
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 
--- fold - Setup smart folding with Treesitter -> LSP -> indent fallback
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
+vim.opt.foldtext = ""
+-- vim.opt.fillchars = {
+--   foldopen = "",
+--   foldclose = "",
+--   fold = " ",
+--   foldsep = " ",
+--   eob = " ",
+--   diff = "╱",
+-- }
 
--- vim.cmd.colorscheme("catppuccin")
--- vim.pack.add({ "https://github.com/folke/tokyonight.nvim" })
--- vim.pack.load("tokyonight.nvim")
--- vim.cmd.colorscheme("tokyonight")
+vim.opt.statuscolumn = [[%!v:lua.Snacks.statuscolumn.get()]]
+
 vim.api.nvim_set_option_value("colorcolumn", "79", {})
 
 -- Set completeopt to have a better completion experience
@@ -50,4 +55,3 @@ vim.opt.timeoutlen = 500
 vim.opt.confirm = true
 vim.opt.laststatus = 3
 vim.opt.sessionoptions = "buffers,curdir,tabpages,winsize,help,globals,skiprtp,folds,resize"
-
