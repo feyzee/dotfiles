@@ -1,8 +1,0 @@
--- vim.pack.add({
---   {
---     src = "https://github.com/nvim-neorg/neorg",
---     version = vim.version.range("9.x"),
---   },
--- })
---
--- require("neorg").setup()
