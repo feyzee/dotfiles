@@ -9,28 +9,46 @@ vim.pack.add({
   },
   "https://github.com/saghen/blink.compat",
   "https://github.com/rafamadriz/friendly-snippets",
+  "https://github.com/folke/lazydev.nvim",
+})
+
+require("lazydev").setup({
+  library = {
+    -- vim.uv types
+    { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+  },
 })
 
 require("blink.cmp").setup({
   appearance = {
-    use_nvim_cmp_as_default = true,
     nerd_font_variant = "mono",
+    use_nvim_cmp_as_default = false,
   },
 
   cmdline = {
+    enabled = true,
     keymap = {
-      ["<C-space>"] = { "accept_and_enter", "fallback" },
+      preset = "cmdline",
       ["<Tab>"] = { "select_next", "fallback" },
       ["<S-Tab>"] = { "select_prev", "fallback" },
     },
-    completion = { menu = { auto_show = true } },
+    completion = {
+      list = { selection = { preselect = false } },
+      menu = {
+        auto_show = function()
+          return vim.fn.getcmdtype() == ":"
+        end,
+      },
+      ghost_text = { enabled = true },
+    },
   },
 
   completion = {
     accept = { auto_brackets = { enabled = true } },
+
     documentation = {
       auto_show = true,
-      auto_show_delay_ms = 500,
+      auto_show_delay_ms = 200,
       treesitter_highlighting = true,
       update_delay_ms = 50,
 
@@ -42,8 +60,8 @@ require("blink.cmp").setup({
 
     ghost_text = { enabled = true },
     keyword = { range = "full" },
+
     list = {
-      max_items = 50,
       selection = { preselect = true, auto_insert = false },
     },
 
@@ -63,17 +81,15 @@ require("blink.cmp").setup({
         components = {
           kind_icon = {
             text = function(ctx)
-              local kind_icon, _, _ = require("mini.icons").get("lsp", ctx.kind)
-              return kind_icon
+              local icon, _, _ = require("mini.icons").get("lsp", ctx.kind)
+              return icon
             end,
-            -- (optional) use highlights from mini.icons
             highlight = function(ctx)
               local _, hl, _ = require("mini.icons").get("lsp", ctx.kind)
               return hl
             end,
           },
           kind = {
-            -- (optional) use highlights from mini.icons
             highlight = function(ctx)
               local _, hl, _ = require("mini.icons").get("lsp", ctx.kind)
               return hl
@@ -87,26 +103,26 @@ require("blink.cmp").setup({
         treesitter = { "lsp" },
       },
     },
-
-    trigger = { show_in_snippet = false },
   },
 
   fuzzy = { implementation = "prefer_rust_with_warning" },
   keymap = {
     preset = "enter",
+    ["<C-y>"] = { "select_and_accept" },
+    ["<CR>"] = { "accept", "fallback" },
+
+    ["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
+    ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
+
     ["<A-]>"] = { "snippet_forward", "fallback" },
     ["<A-[>"] = { "snippet_backward", "fallback" },
 
-    ["<Tab>"] = { "select_next", "fallback" },
-    ["<S-Tab>"] = { "select_prev", "fallback" },
-    ["<CR>"] = { "accept", "fallback" },
-
-    ["<S-k>"] = { "scroll_documentation_up", "fallback" },
-    ["<S-j>"] = { "scroll_documentation_down", "fallback" },
-
-    ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
+    ["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
     ["<C-e>"] = { "hide", "fallback" },
     ["<C-k>"] = { "show_signature", "hide_signature", "fallback" },
+
+    ["<C-b>"] = { "scroll_documentation_up", "fallback" },
+    ["<C-f>"] = { "scroll_documentation_down", "fallback" },
   },
 
   signature = {
@@ -115,12 +131,13 @@ require("blink.cmp").setup({
   },
 
   snippets = { preset = "luasnip" },
+
   sources = {
     default = { "lsp", "path", "snippets", "buffer" },
     min_keyword_length = 2,
 
     per_filetype = {
-      lua = { inherit_defaults = true },
+      lua = { inherit_defaults = true, "lazydev" },
     },
 
     providers = {
@@ -176,6 +193,12 @@ require("blink.cmp").setup({
           prefer_doc_trig = false,
           use_label_description = false,
         },
+      },
+      
+      lazydev = {
+        name = "LazyDev",
+        module = "lazydev.integrations.blink",
+        score_offset = 100, -- prefer over lsp
       },
     },
   },
