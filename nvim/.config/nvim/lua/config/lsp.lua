@@ -96,9 +96,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
       return
     end
 
-    -- Enable inlay hints if supported
+    -- Inlay hints: off by default; toggle with <leader>ih
     if client:supports_method("textDocument/inlayHint") then
-      vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
+      vim.lsp.inlay_hint.enable(false, { bufnr = event.buf })
 
       if not vim.b[event.buf].lsp_inlay_keymap_set then
         vim.keymap.set("n", "<leader>ih", function()
@@ -138,5 +138,31 @@ vim.api.nvim_create_autocmd("LspDetach", {
       vim.b[event.buf].lsp_inlay_keymap_set = nil
       vim.b[event.buf].lsp_codelens_keymap_set = nil
     end
+  end,
+})
+
+-- LSP exit diagnostics: surface unexpected exits so we can identify which
+-- server is crashing instead of silently disappearing.
+vim.api.nvim_create_autocmd("LspDetach", {
+  group = vim.api.nvim_create_augroup("LspExitDiagnostics", { clear = true }),
+  callback = function(event)
+    local client = vim.lsp.get_client_by_id(event.data.client_id)
+    if not client then
+      return
+    end
+    -- Defer until the client has a chance to record an exit code.
+    vim.defer_fn(function()
+      -- Only complain about *abnormal* exits.
+      if client.is_stopped() and (client.exit_code or 0) ~= 0 then
+        vim.notify(
+          ("[lsp] %s exited with code %s (signal %s)"):format(
+            client.name,
+            tostring(client.exit_code),
+            tostring(client.signal or "none")
+          ),
+          vim.log.levels.WARN
+        )
+      end
+    end, 200)
   end,
 })
