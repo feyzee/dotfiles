@@ -25,7 +25,7 @@ vim.keymap.set("n", "<leader>tT", function()
   require("neotest").run.run(vim.loop.cwd())
 end, { desc = "[Neotest] Run All Test Files" })
 
-vim.keymap.set("n", "<leader>tr", function()
+vim.keymap.set("n", "<leader>tR", function()
   require("neotest").run.run()
 end, { desc = "[Neotest] Run Nearest" })
 

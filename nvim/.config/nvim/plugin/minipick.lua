@@ -91,20 +91,24 @@ require("mini.pick").setup({
 })
 
 vim.keymap.set("n", "<leader><leader>", "<Cmd>Pick buffers<CR>", { desc = "Buffer Picker" })
+vim.keymap.set("n", "<leader>n", "<Cmd>Pick buffers<CR>", { desc = "Buffer Picker" })
 vim.keymap.set("n", "<leader>ff", "<Cmd>Pick files<CR>", { desc = "Files Picker" })
 vim.keymap.set("n", "<leader>fg", "<Cmd>Pick grep_live<CR>", { desc = "Live Grep Workspace" })
 vim.keymap.set("n", "<leader>fw", "<Cmd>Pick grep pattern='<cword>'<CR>", { desc = "Grep current word" })
-vim.keymap.set("v", "<leader>fw", "<Cmd>Pick grep pattern='<cword>'<CR>",
-  { desc = "Grep current word (while in visual mode)" })
-vim.keymap.set("n", "<leader>/", "<Cmd>Pick buf_lines scope='current'<CR>", { desc = "Grep current buffer" })
-vim.keymap.set("n", "<leader>n", "<Cmd>Pick buffers<CR>", { desc = "Buffer Picker" })
-vim.keymap.set("n", "<leader>n", "<Cmd>Pick buffers<CR>", { desc = "Buffer Picker" })
-vim.keymap.set("n", "<leader>n", "<Cmd>Pick buffers<CR>", { desc = "Buffer Picker" })
-vim.keymap.set("n", "<leader>n", "<Cmd>Pick buffers<CR>", { desc = "Buffer Picker" })
+vim.keymap.set(
+  "v",
+  "<leader>fw",
+  "<Cmd>Pick grep pattern='<cword>'<CR>",
+  { desc = "Grep current word (while in visual mode)" }
+)
 
 vim.keymap.set("n", "<leader>/", function()
-  MiniPick.builtin.buf_lines()
+  MiniExtra.pickers.buf_lines({ scope = "current" })
 end, { desc = "Search current buffer" })
+
+vim.keymap.set("n", "<leader>fb", function()
+  MiniExtra.pickers.buf_lines({ scope = "all" })
+end, { desc = "Search all open buffers" })
 
 -- TODO: migrate Fzf-Lua keymaps
 -- vim.keymap.set("n", "<leader>ftd", function()
