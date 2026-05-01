@@ -1,33 +1,8 @@
-local github = "https://github.com/"
-
 vim.pack.add({
-  github .. "lewis6991/gitsigns.nvim",
-  github .. "nvim-mini/mini.diff",
-  -- github .. "sindrets/diffview.nvim",
-  -- github .. "akinsho/git-conflict.nvim",
+  "https://github.com/lewis6991/gitsigns.nvim",
 })
 
-require("mini.diff").setup({})
-
 require("gitsigns").setup({
-  signs = {
-    add = { hl = "DiffAdd", text = "│", numhl = "GitSignsAddNr" },
-    change = { hl = "DiffChange", text = "│", numhl = "GitSignsChangeNr" },
-    delete = { hl = "DiffDelete", text = "", numhl = "GitSignsDeleteNr" },
-    topdelete = { hl = "DiffDelete", text = "", numhl = "GitSignsDeleteNr" },
-    changedelete = {
-      hl = "DiffChangeDelete",
-      text = "~",
-      numhl = "GitSignsChangeNr",
-    },
-    untracked = {
-      hl = "GitSignsAdd",
-      text = "┆",
-      numhl = "GitSignsAddNr",
-      linehl = "GitSignsAddLn",
-    },
-  },
-
   on_attach = function(bufnr)
     local gs = package.loaded.gitsigns
 
