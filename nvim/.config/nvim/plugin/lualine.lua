@@ -8,7 +8,7 @@ require("lualine").setup({
     disabled_filetypes = { "mason", "lazy", "NvimTree", "neo-tree", "gitsigns-blame", "quickfix", "prompt" },
     globalstatus = true,
     section_separators = { left = "", right = "" },
-    theme = "tokyonight",
+    theme = "auto",
   },
   sections = {
     lualine_a = {
@@ -52,7 +52,7 @@ require("lualine").setup({
     lualine_a = {
       {
         "tabs",
-        mode = 1, -- 0: Shows tab_name or new tab count if no name is set
+        mode = 1,                   -- 0: Shows tab_name or new tab count if no name is set
         path = 0,
         max_length = vim.o.columns, -- Force full width to avoid truncation
         show_modified_status = false,
