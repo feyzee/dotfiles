@@ -3,6 +3,7 @@ local signs = { Error = " ", Warn = " ", Hint = " ", Information = "
 
 -- List of language servers to enable
 local servers = {
+  "basedpyright",
   "bashls",
   "cue",
   "golangci_lint_ls",
