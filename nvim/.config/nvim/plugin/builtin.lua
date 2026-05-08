@@ -2,7 +2,9 @@ vim.cmd.packadd("nvim.undotree")
 vim.cmd.packadd("nvim.difftool")
 vim.cmd.packadd("cfilter")
 
-vim.keymap.set("n", "<leader>u", require("undotree").open, { desc = "Undotree window" })
+vim.keymap.set("n", "<leader>U", function()
+  require("undotree").open({ command = math.floor(vim.o.columns * 0.3) .. "vnew" })
+end, { desc = "Undotree" })
 
 -- Pretty Undotree
 local NS = vim.api.nvim_create_namespace("undo_hl")

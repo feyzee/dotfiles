@@ -46,3 +46,8 @@ vim.keymap.set("n", "<leader>tr", function()
     vim.cmd("redrawtabline")
   end
 end, { desc = "Rename Tab" })
+
+-- Quickfix list
+vim.keymap.set('n', '<leader>qo', ':copen<CR>', { desc = 'Quickfix - Open' })
+vim.keymap.set('n', '<leader>qq', ':cclose<CR>', { desc = 'Quickfix - close' })
+vim.keymap.set('n', '<leader>qc', ':call setqflist([])<CR>', { desc = 'Clear Quickfix' })

@@ -57,6 +57,12 @@ require("mini.files").setup({
 })
 
 -- Key mappings
-vim.keymap.set("n", "<leader>bf", function ()
-  MiniFiles.open(vim.api.nvim_buf_get_name(0))
+vim.keymap.set("n", "<leader>bf", function()
+  local path = vim.api.nvim_buf_get_name(0)
+  if path ~= "" and vim.uv.fs_stat(path) then
+    MiniFiles.open(path)
+  else
+    vim.notify("Buffer has no valid file path, opening at CWD", vim.log.levels.INFO)
+    MiniFiles.open()
+  end
 end, { desc = "Open mini.files (cwd)" })
