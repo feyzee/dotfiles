@@ -17,6 +17,7 @@ local languages = {
   "lua",
   "markdown",
   "markdown_inline",
+  "org",
   "python",
   "query",
   "regex",
@@ -36,18 +37,29 @@ vim.pack.add({
 
 require("nvim-treesitter").setup()
 
+-- Orgmode parsers
+-- local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+-- parser_config.org = {
+--   install_info = {
+--     url = 'https://github.com/milisims/tree-sitter-org',
+--     revision = 'main',
+--     files = { 'src/parser.c', 'src/scanner.c' },
+--   },
+--   filetype = 'org',
+-- }
+
+-- Install missing parsers asynchronously on startup.
 local function tree_sitter_cli_available()
   return vim.fn.executable("tree-sitter") == 1
 end
 
--- Install missing parsers asynchronously on startup.
 local function install_missing()
   if not tree_sitter_cli_available() then
     vim.notify(
       "[treesitter] `tree-sitter` CLI not found on $PATH. Install with:\n"
-        .. "  brew install tree-sitter-cli\n"
-        .. "  or with your preferred package manager\n"
-        .. "Parsers cannot be compiled until then.",
+      .. "  brew install tree-sitter-cli\n"
+      .. "  or with your preferred package manager\n"
+      .. "Parsers cannot be compiled until then.",
       vim.log.levels.WARN
     )
     return
@@ -77,9 +89,9 @@ vim.api.nvim_create_autocmd("PackChanged", {
     if name ~= "nvim-treesitter" then
       return
     end
-      if not ev.data.active then
-        vim.cmd.packadd("nvim-treesitter")
-      end
+    if not ev.data.active then
+      vim.cmd.packadd("nvim-treesitter")
+    end
     if kind == "update" then
       vim.cmd("TSUpdate")
     elseif kind == "install" then
