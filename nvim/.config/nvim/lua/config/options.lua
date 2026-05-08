@@ -24,6 +24,7 @@ vim.opt.smartcase = true
 vim.opt.incsearch = true
 vim.opt.hidden = true
 vim.opt.updatetime = 1000
+vim.opt.signcolumn = "auto"
 vim.opt.termguicolors = true
 vim.opt.hlsearch = false
 vim.opt.winborder = "rounded"
@@ -35,7 +36,10 @@ vim.opt.splitright = true
 vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
 vim.opt.foldtext = ""
-vim.opt.fillchars = { eob = " ", diff = "╱" }
+vim.opt.fillchars = {
+  eob = " ",
+  diff = "╱",
+}
 
 vim.api.nvim_set_option_value("colorcolumn", "79", {})
 
