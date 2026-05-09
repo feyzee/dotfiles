@@ -1,5 +1,6 @@
 vim.pack.add({
   "https://github.com/nvim-lualine/lualine.nvim",
+  "https://github.com/SmiteshP/nvim-navic"
 })
 
 require("lualine").setup({
@@ -27,7 +28,14 @@ require("lualine").setup({
         },
       },
     },
-    lualine_c = { "branch" },
+    lualine_c = {
+      "branch",
+      {
+        "navic",
+        color_correction = "dynamic",
+        navic_opts = { separator = " > ", highlight = true },
+      },
+    },
     lualine_x = {
       {
         "diagnostics",

@@ -109,6 +109,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
       end
     end
 
+    -- Document symbols as breadcrumbs in statusline
+    if client:supports_method("textDocument/documentSymbol") then
+      require("nvim-navic").attach(client, event.buf)
+    end
+
     -- Trigger codelens manually
     if client:supports_method("textDocument/codeLens") then
       if not vim.b[event.buf].lsp_codelens_keymap_set then
