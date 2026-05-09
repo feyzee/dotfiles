@@ -73,8 +73,21 @@ vim.lsp.config("*", {
   end)(),
 })
 
--- Autocmds
-local LspAttachGroup = vim.api.nvim_create_augroup("lsp-attach", { clear = true })
+-- List of language servers to enable
+local servers = {
+  "bashls",
+  "cue",
+  "golangci_lint_ls",
+  "gopls",
+  "helm_ls",
+  "lua_ls",
+  "ruff",
+  "rust_analyzer",
+  "tofu_ls",
+  "tflint",
+  "ts_ls",
+  "yamlls",
+}
 
 -- Buffer variable cleanup on delete
 vim.api.nvim_create_autocmd("BufDelete", {

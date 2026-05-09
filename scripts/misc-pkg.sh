@@ -1,11 +1,13 @@
 #!/bin/bash
 
+PLATFORM=$(uname)
+
 install_rust()
 {
     echo "Installing rust"
-    if [ $platform == 'Linux' ]; then
+    if [[ $PLATFORM == 'Linux' ]]; then
         rustup-init
-    elif [ $platform == 'Darwin' ]; then
+    elif [[ $PLATFORM == 'Darwin' ]]; then
         rustup default stable
     else
         echo "OS not supported. Exiting..."
@@ -39,5 +41,10 @@ install_npm_packages()
     source ./pkg/npm
     echo "Installing packages using Cargo"
 
-    npm install -g ${npm_packages[@]}
+    pnpm install -g ${npm_packages[@]}
 }
+
+install_rust
+install_cargo_packages
+install_go_packages
+install_npm_packages

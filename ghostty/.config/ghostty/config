@@ -32,3 +32,6 @@ keybind = shift+enter=text:\x1b\r
 
 # platform specific config
 config-file = platform.conf
+
+# custom shaders
+custom-shader = ./shaders/cursor_blaze_2.glsl
