@@ -1,7 +1,5 @@
--- Diagnostic Configs
 local signs = { Error = " ", Warn = " ", Hint = " ", Information = " " }
 
--- List of language servers to enable
 local servers = {
   "basedpyright",
   "bashls",
@@ -17,8 +15,6 @@ local servers = {
   "ts_ls",
   "yamlls",
 }
-
-vim.lsp.enable(servers)
 
 vim.diagnostic.config({
   float = {
@@ -46,24 +42,20 @@ vim.diagnostic.config({
   update_in_insert = false,
 })
 
--- Global LSP configuration for all servers
 vim.lsp.config("*", {
   capabilities = (function()
     local capabilities = vim.lsp.protocol.make_client_capabilities()
 
-    -- Enhance completion
     capabilities.textDocument.completion.completionItem.snippetSupport = true
     capabilities.textDocument.completion.completionItem.resolveSupport = {
       properties = { "documentation", "detail", "additionalTextEdits" },
     }
 
-    -- Enable folding range as fallback for when treesitter is not available
     capabilities.textDocument.foldingRange = {
       dynamicRegistration = false,
       lineFoldingOnly = true,
     }
 
-    -- Enable workspace file operations
     capabilities.workspace.fileOperations = {
       didRename = true,
       willRename = true,
@@ -73,23 +65,10 @@ vim.lsp.config("*", {
   end)(),
 })
 
--- List of language servers to enable
-local servers = {
-  "bashls",
-  "cue",
-  "golangci_lint_ls",
-  "gopls",
-  "helm_ls",
-  "lua_ls",
-  "ruff",
-  "rust_analyzer",
-  "tofu_ls",
-  "tflint",
-  "ts_ls",
-  "yamlls",
-}
+vim.lsp.enable(servers)
 
--- Buffer variable cleanup on delete
+local LspAttachGroup = vim.api.nvim_create_augroup("lsp-attach", { clear = true })
+
 vim.api.nvim_create_autocmd("BufDelete", {
   group = vim.api.nvim_create_augroup("LspBufferCleanup", { clear = true }),
   callback = function(event)
@@ -110,7 +89,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
       return
     end
 
-    -- Inlay hints: off by default; toggle with <leader>ih
     if client:supports_method("textDocument/inlayHint") then
       vim.lsp.inlay_hint.enable(false, { bufnr = event.buf })
 
@@ -122,12 +100,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
       end
     end
 
-    -- Document symbols as breadcrumbs in statusline
     if client:supports_method("textDocument/documentSymbol") then
       require("nvim-navic").attach(client, event.buf)
     end
 
-    -- Trigger codelens manually
     if client:supports_method("textDocument/codeLens") then
       if not vim.b[event.buf].lsp_codelens_keymap_set then
         vim.keymap.set("n", "<leader>cl", function()
@@ -137,14 +113,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
       end
     end
 
-    -- Disable semantic tokens for large files
     if vim.api.nvim_buf_line_count(event.buf) > 5000 then
       vim.lsp.semantic_tokens.enable(false, { bufnr = event.buf, client_id = client.id })
     end
   end,
 })
 
--- Do cleanup when LspDetach event occurs
 vim.api.nvim_create_autocmd("LspDetach", {
   group = vim.api.nvim_create_augroup("LspDetach", { clear = true }),
   callback = function(event)
@@ -153,15 +127,12 @@ vim.api.nvim_create_autocmd("LspDetach", {
     local remaining_clients = vim.lsp.get_clients({ bufnr = event.buf })
     if #remaining_clients == 0 then
       pcall(vim.lsp.inlay_hint.enable, false, { bufnr = event.buf })
-      -- Clean up buffer-local keymap tracking variables
       vim.b[event.buf].lsp_inlay_keymap_set = nil
       vim.b[event.buf].lsp_codelens_keymap_set = nil
     end
   end,
 })
 
--- LSP exit diagnostics: surface unexpected exits so we can identify which
--- server is crashing instead of silently disappearing.
 vim.api.nvim_create_autocmd("LspDetach", {
   group = vim.api.nvim_create_augroup("LspExitDiagnostics", { clear = true }),
   callback = function(event)
@@ -169,9 +140,7 @@ vim.api.nvim_create_autocmd("LspDetach", {
     if not client then
       return
     end
-    -- Defer until the client has a chance to record an exit code.
     vim.defer_fn(function()
-      -- Only complain about *abnormal* exits.
       if client.is_stopped() and (client.exit_code or 0) ~= 0 then
         vim.notify(
           ("[lsp] %s exited with code %s (signal %s)"):format(
