@@ -47,6 +47,13 @@ vim.keymap.set("n", "<leader>tr", function()
   end
 end, { desc = "Rename Tab" })
 
+vim.keymap.set("n", "<leader>oa", function()
+  require("orgmode").action("agenda.prompt")
+end, { desc = "Org Agenda" })
+vim.keymap.set("n", "<leader>oc", function()
+  require("orgmode").action("capture.prompt")
+end, { desc = "Org Capture" })
+
 -- Quickfix list
 vim.keymap.set('n', '<leader>qo', ':copen<CR>', { desc = 'Quickfix - Open' })
 vim.keymap.set('n', '<leader>qq', ':cclose<CR>', { desc = 'Quickfix - close' })
