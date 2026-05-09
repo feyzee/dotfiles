@@ -118,7 +118,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     if client:supports_method("textDocument/codeLens") then
       if not vim.b[event.buf].lsp_codelens_keymap_set then
         vim.keymap.set("n", "<leader>cl", function()
-          vim.lsp.codelens.refresh({ bufnr = event.buf })
+          vim.lsp.codelens.enable(true, { bufnr = event.buf })
         end, { desc = "Refresh CodeLens", buffer = event.buf })
         vim.b[event.buf].lsp_codelens_keymap_set = true
       end
@@ -126,7 +126,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
     -- Disable semantic tokens for large files
     if vim.api.nvim_buf_line_count(event.buf) > 5000 then
-      vim.lsp.semantic_tokens.stop(event.buf, client.id)
+      vim.lsp.semantic_tokens.enable(false, { bufnr = event.buf, client_id = client.id })
     end
   end,
 })
