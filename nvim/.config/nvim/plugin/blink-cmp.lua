@@ -74,8 +74,8 @@ require("blink.cmp").setup({
 
       draw = {
         columns = {
-          { "label",     "label_description", gap = 1 },
-          { "kind_icon", "kind",              gap = 1 },
+          { "label", "label_description", gap = 1 },
+          { "kind_icon", "kind", gap = 1 },
         },
 
         components = {
@@ -109,7 +109,6 @@ require("blink.cmp").setup({
   keymap = {
     preset = "enter",
     ["<C-y>"] = { "select_and_accept" },
-    ["<CR>"] = { "accept", "fallback" },
 
     ["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
     ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
@@ -117,12 +116,7 @@ require("blink.cmp").setup({
     ["<A-]>"] = { "snippet_forward", "fallback" },
     ["<A-[>"] = { "snippet_backward", "fallback" },
 
-    ["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
     ["<C-e>"] = { "hide", "fallback" },
-    ["<C-k>"] = { "show_signature", "hide_signature", "fallback" },
-
-    ["<C-b>"] = { "scroll_documentation_up", "fallback" },
-    ["<C-f>"] = { "scroll_documentation_down", "fallback" },
   },
 
   signature = {
@@ -194,7 +188,7 @@ require("blink.cmp").setup({
           use_label_description = false,
         },
       },
-      
+
       lazydev = {
         name = "LazyDev",
         module = "lazydev.integrations.blink",

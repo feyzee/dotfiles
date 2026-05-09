@@ -6,91 +6,62 @@ vim.pack.add({
 require("mini.extra").setup()
 
 require("mini.pick").setup({
-  -- Delays (in ms; should be at least 1)
   delay = {
-    -- Delay between forcing asynchronous behavior
     async = 10,
-
-    -- Delay between computation start and visual feedback about it
     busy = 50,
   },
 
-  -- Keys for performing actions. See `:h MiniPick-actions`.
-  mappings = {
-    caret_left = "<Left>",
-    caret_right = "<Right>",
-
-    choose = "<CR>",
-    choose_in_split = "<C-s>",
-    choose_in_tabpage = "<C-t>",
-    choose_in_vsplit = "<C-v>",
-    choose_marked = "<M-CR>",
-
-    delete_char = "<BS>",
-    delete_char_right = "<Del>",
-    delete_left = "<C-u>",
-    delete_word = "<C-w>",
-
-    mark = "<C-x>",
-    mark_all = "<C-a>",
-
-    move_down = "<C-n>",
-    move_start = "<C-g>",
-    move_up = "<C-p>",
-
-    paste = "<C-r>",
-
-    refine = "<C-Space>",
-    refine_marked = "<M-Space>",
-
-    scroll_down = "<C-f>",
-    scroll_left = "<C-h>",
-    scroll_right = "<C-l>",
-    scroll_up = "<C-b>",
-
-    stop = "<Esc>",
-
-    toggle_info = "<S-Tab>",
-    toggle_preview = "<Tab>",
-  },
-
-  -- General options
   options = {
-    -- Whether to show content from bottom to top
-    content_from_bottom = false,
-
-    -- Whether to cache matches (more speed and memory on repeated prompts)
     use_cache = false,
   },
 
-  -- Source definition. See `:h MiniPick-source`.
-  source = {
-    items = nil,
-    name = nil,
-    cwd = nil,
-
-    match = nil,
-    show = nil,
-    preview = nil,
-
-    choose = nil,
-    choose_marked = nil,
-  },
-
-  -- Window related options
   window = {
-    -- Float window config (table or callable returning it)
-    config = nil,
-
-    -- String to use as caret in prompt
     prompt_caret = "▏",
-
-    -- String to use as prefix in prompt
     prompt_prefix = "> ",
   },
 })
 
-vim.keymap.set("n", "<leader><leader>", "<Cmd>Pick buffers<CR>", { desc = "Buffer Picker" })
+local function pick_buffers()
+  local cur_buf = vim.api.nvim_get_current_buf()
+  local items = {}
+  for _, buf_id in ipairs(vim.api.nvim_list_bufs()) do
+    if not vim.bo[buf_id].buflisted then
+      goto continue
+    end
+    local name = vim.api.nvim_buf_get_name(buf_id)
+    if name == "" then
+      goto continue
+    end
+
+    name = vim.fn.fnamemodify(name, ":~:.")
+
+    local flag = " "
+    if buf_id == cur_buf then
+      flag = "%"
+    elseif vim.bo[buf_id].modified then
+      flag = "+"
+    elseif not vim.api.nvim_buf_is_loaded(buf_id) then
+      flag = "h"
+    end
+
+    table.insert(items, { text = flag .. " " .. name, bufnr = buf_id, path = name })
+    ::continue::
+  end
+
+  MiniPick.start({
+    source = {
+      name = "Buffers",
+      items = items,
+      choose = function(item)
+        local win = MiniPick.get_picker_state().windows.target
+        vim.api.nvim_win_set_buf(win, item.bufnr)
+        MiniPick.stop()
+      end,
+    },
+  })
+end
+
+vim.keymap.set("n", "<leader><leader>", pick_buffers, { desc = "Buffer Picker" })
 vim.keymap.set("n", "<leader>ff", "<Cmd>Pick files<CR>", { desc = "Files Picker" })
 vim.keymap.set("n", "<leader>fg", "<Cmd>Pick grep_live<CR>", { desc = "Live Grep Workspace" })
 vim.keymap.set("n", "<leader>fw", "<Cmd>Pick grep pattern='<cword>'<CR>", { desc = "Grep current word" })

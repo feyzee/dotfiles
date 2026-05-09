@@ -1,6 +1,7 @@
 vim.pack.add({
   "https://github.com/nvim-lualine/lualine.nvim",
-  "https://github.com/SmiteshP/nvim-navic"
+  "https://github.com/nvim-mini/mini.icons",
+  "https://github.com/SmiteshP/nvim-navic",
 })
 
 require("lualine").setup({
@@ -46,9 +47,24 @@ require("lualine").setup({
     },
     lualine_y = {
       "selectioncount",
-      "filetype",
-      -- Removed "lsp_status" component for better performance
-      -- It was causing excessive CPU usage on statusline updates
+      {
+        function()
+          local ft = vim.bo.filetype
+          if ft == "" then
+            return ""
+          end
+          local icon, _ = require("mini.icons").get("filetype", ft)
+          return icon and (icon .. " " .. ft) or ft
+        end,
+        color = function()
+          local _, hl = require("mini.icons").get("filetype", vim.bo.filetype)
+          if not hl then
+            return {}
+          end
+          local c = vim.api.nvim_get_hl(0, { name = hl })
+          return c.fg and { fg = string.format("#%06x", c.fg) } or {}
+        end,
+      },
     },
     lualine_z = {
       "progress",
@@ -60,7 +76,7 @@ require("lualine").setup({
     lualine_a = {
       {
         "tabs",
-        mode = 1,                   -- 0: Shows tab_name or new tab count if no name is set
+        mode = 1, -- 0: Shows tab_name or new tab count if no name is set
         path = 0,
         max_length = vim.o.columns, -- Force full width to avoid truncation
         show_modified_status = false,

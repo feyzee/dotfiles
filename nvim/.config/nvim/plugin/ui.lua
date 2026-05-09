@@ -9,33 +9,9 @@ vim.pack.add({
 
 require("fidget").setup()
 
-require("mini.icons").setup({
-  default_component_configs = {
-    icon = {
-      provider = function(icon, node) -- setup a custom icon provider
-        local text, hl
-        local mini_icons = require("mini.icons")
-        if node.type == "file" then          -- if it's a file, set the text/hl
-          text, hl = mini_icons.get("file", node.name)
-        elseif node.type == "directory" then -- get directory icons
-          text, hl = mini_icons.get("directory", node.name)
-          -- only set the icon text if it is not expanded
-          if node:is_expanded() then
-            text = nil
-          end
-        end
+require("mini.icons").setup()
 
-        -- set the icon text/highlight only if it exists
-        if text then
-          icon.text = text
-        end
-        if hl then
-          icon.highlight = hl
-        end
-      end,
-    },
-  },
-})
+MiniIcons.tweak_lsp_kind()
 
 require("noice").setup({
   lsp = {
@@ -75,21 +51,22 @@ require("which-key").setup({
     {
       mode = { "n", "x" },
       { "<leader><tab>", group = "tabs" },
-      { "<leader>c",     group = "code" },
-      { "<leader>d",     group = "debug" },
-      { "<leader>dp",    group = "profiler" },
-      { "<leader>f",     group = "file/find" },
-      { "<leader>g",     group = "git" },
-      { "<leader>gh",    group = "hunks" },
-      { "<leader>q",     group = "quit/session" },
-      { "<leader>s",     group = "search" },
-      { "<leader>u",     group = "ui" },
-      { "<leader>x",     group = "diagnostics/quickfix" },
-      { "[",             group = "prev" },
-      { "]",             group = "next" },
-      { "g",             group = "goto" },
-      { "gs",            group = "surround" },
-      { "z",             group = "fold" },
+      { "<leader>T", group = "tab" },
+      { "<leader>c", group = "code" },
+      { "<leader>d", group = "debug" },
+      { "<leader>dp", group = "profiler" },
+      { "<leader>f", group = "file/find" },
+      { "<leader>g", group = "git" },
+      { "<leader>gh", group = "hunks" },
+      { "<leader>q", group = "quit/session" },
+      { "<leader>s", group = "search" },
+      { "<leader>u", group = "ui" },
+      { "<leader>x", group = "diagnostics/quickfix" },
+      { "[", group = "prev" },
+      { "]", group = "next" },
+      { "g", group = "goto" },
+      { "gs", group = "surround" },
+      { "z", group = "fold" },
       {
         "<leader>w",
         group = "windows",

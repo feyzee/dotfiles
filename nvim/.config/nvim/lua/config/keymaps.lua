@@ -33,7 +33,7 @@ vim.keymap.set("n", "<S-Right>", ":vertical resize -2<CR>", { noremap = true, si
 vim.keymap.set("n", "<S-Left>", ":vertical resize +2<CR>", { noremap = true, silent = true })
 
 -- Tabs
-vim.keymap.set("n", "<leader>tr", function()
+vim.keymap.set("n", "<leader>Tn", function()
   local new_name = vim.fn.input("Tab name: ")
   if new_name ~= "" then
     vim.t.tab_name = new_name
@@ -55,6 +55,6 @@ vim.keymap.set("n", "<leader>oc", function()
 end, { desc = "Org Capture" })
 
 -- Quickfix list
-vim.keymap.set('n', '<leader>qo', ':copen<CR>', { desc = 'Quickfix - Open' })
-vim.keymap.set('n', '<leader>qq', ':cclose<CR>', { desc = 'Quickfix - close' })
-vim.keymap.set('n', '<leader>qc', ':call setqflist([])<CR>', { desc = 'Clear Quickfix' })
+vim.keymap.set("n", "<leader>qo", ":copen<CR>", { desc = "Quickfix - Open" })
+vim.keymap.set("n", "<leader>qq", ":cclose<CR>", { desc = "Quickfix - close" })
+vim.keymap.set("n", "<leader>qc", ":call setqflist([])<CR>", { desc = "Clear Quickfix" })
