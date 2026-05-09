@@ -14,7 +14,7 @@ else
     set -Ux EDITOR /usr/bin/nvim
 end
 
-fish_config theme choose 'Snow Day'
+fish_config theme choose TokyoNight
 
 # add folders to $PATH
 fish_add_path ~/.local/bin

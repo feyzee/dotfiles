@@ -1,50 +1,36 @@
-local keymap = vim.keymap.set
-local opts = { noremap = true, silent = true }
+-- set <space> as leader key
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
--- Keymaps for better default experience
--- See `:help vim.keymap.set()`
-keymap({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
-keymap({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
-keymap({ "n", "x" }, "<Down>", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
-keymap({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
-keymap({ "n", "x" }, "<Up>", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
-
--- Remap for dealing with word wrap
-keymap("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-keymap("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-
--- Fold related keymaps
-keymap("n", "+", ":foldopen<CR>", { desc = "Open code fold" })
-keymap("n", "-", ":foldclose<CR>", { desc = "Close code fold" })
+-- keymaps for better default experience
+vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
+vim.keymap.set({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
+vim.keymap.set({ "n", "x" }, "<Up>", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
+vim.keymap.set({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
+vim.keymap.set({ "n", "x" }, "<Down>", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
 
 -- LSP
-keymap("n", "gd", vim.lsp.buf.definition, { desc = "Goto Definition" })
-keymap("n", "gD", vim.lsp.buf.declaration, { desc = "Goto Declaration" })
-keymap("n", "gr", vim.lsp.buf.references, { desc = "Goto References" })
-keymap("n", "gI", vim.lsp.buf.implementation, { desc = "Goto Implementation" })
-keymap("n", "gy", vim.lsp.buf.type_definition, { desc = "Goto Type Definition" })
-keymap("n", "K", vim.lsp.buf.hover, { desc = "Hover Documentation" })
-keymap("n", "gK", vim.lsp.buf.signature_help, { desc = "Signature Help" })
-keymap({ "n", "v" }, "gca", vim.lsp.buf.code_action, { desc = "Code Action" })
-keymap("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename Object using LSP" })
+vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Goto Definition" })
+vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover Documentation" })
+vim.keymap.set("n", "gK", vim.lsp.buf.signature_help, { desc = "Signature Help" })
 
 -- Diagnostics
-keymap("n", "[d", function()
+vim.keymap.set("n", "[d", function()
   vim.diagnostic.jump({ count = -1, float = true })
 end, { desc = "Goto Previous Diagnostic" })
-keymap("n", "]d", function()
+vim.keymap.set("n", "]d", function()
   vim.diagnostic.jump({ count = 1, float = true })
 end, { desc = "Goto Next Diagnostic" })
 keymap("n", "gl", vim.diagnostic.open_float, { desc = "Show Diagnostics in Floating Window" })
 keymap("n", "gqf", vim.diagnostic.setloclist, { desc = "Show Diagnostics in Quickfix Window" })
 
 -- Fzf-Lua
--- keymap("n", "<leader><space>", require("fzf-lua").buffers, { desc = "[ ] Find existing buffers" })
--- keymap("n", "<leader>ff", require("fzf-lua").files, { desc = "[F]Find [F]iles" })
--- keymap("n", "<leader>fg", require("fzf-lua").live_grep, { desc = "[F]ind using [G]rep in current project" })
--- keymap("n", "<leader>/", require("fzf-lua").grep_curbuf, { desc = "Grep in current buffer" })
--- keymap("n", "<leader>fw", require("fzf-lua").grep_cword, { desc = "Grep Words under cursor" })
--- keymap("v", "<leader>fw", require("fzf-lua").grep_visual, { desc = "Grep Words selected using Visual Mode" })
+keymap("n", "<leader><space>", require("fzf-lua").buffers, { desc = "[ ] Find existing buffers" })
+keymap("n", "<leader>ff", require("fzf-lua").files, { desc = "[F]Find [F]iles" })
+keymap("n", "<leader>fg", require("fzf-lua").live_grep, { desc = "[F]ind using [G]rep in current project" })
+keymap("n", "<leader>/", require("fzf-lua").grep_curbuf, { desc = "Grep in current buffer" })
+keymap("n", "<leader>fw", require("fzf-lua").grep_cword, { desc = "Grep Words under cursor" })
+keymap("v", "<leader>fw", require("fzf-lua").grep_visual, { desc = "Grep Words selected using Visual Mode" })
 keymap("n", "<leader>ftd", function()
   require("fzf-lua").grep({ search = "TODO|HACK|PERF|NOTE|FIX|FIXME", no_esc = true })
 end, { desc = "Grep for TODO comments" })
@@ -75,33 +61,15 @@ keymap("n", "<leader>lwd", require("fzf-lua").lsp_workspace_diagnostics, { desc 
 keymap("n", "<leader>lca", require("fzf-lua").lsp_code_actions, { desc = "[L]SP [C]ode [A]ctions" })
 
 -- Window management
-keymap("n", "<C-h>", "<C-w>h", opts)
-keymap("n", "<C-j>", "<C-w>j", opts)
-keymap("n", "<C-k>", "<C-w>k", opts)
-keymap("n", "<C-l>", "<C-w>l", opts)
-keymap("n", "<S-Right>", ":vertical resize -2<CR>", opts)
-keymap("n", "<S-Left>", ":vertical resize +2<CR>", opts)
-
--- Text
-keymap("n", "<A-Up>", "<Esc>:m .-2<CR>==", opts)
-keymap("n", "<A-Down>", "<Esc>:m .+1<CR>==", opts)
-
--- Neotree removed - using mini.files instead (bound to <leader>bf)
-
--- Mini.files
--- keymap("n", "<leader>e", require("mini.files").open(vim.api.nvim_buf_get_name(0), true), opts)
-
--- Terraform
-keymap("n", "<leader>tfv", ":!terraform validate<CR>", opts)
-keymap("n", "<leader>tfmt", ":!terraform fmt<CR>", opts)
-
--- Snacks
--- keymap("n", "<leader>.", function()
---   Snacks.scratch()
--- end, { desc = "Toggle Scratch Buffer" })
+vim.keymap.set("n", "<C-h>", "<C-w>h", { noremap = true, silent = true })
+vim.keymap.set("n", "<C-j>", "<C-w>j", { noremap = true, silent = true })
+vim.keymap.set("n", "<C-k>", "<C-w>k", { noremap = true, silent = true })
+vim.keymap.set("n", "<C-l>", "<C-w>l", { noremap = true, silent = true })
+vim.keymap.set("n", "<S-Right>", ":vertical resize -2<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<S-Left>", ":vertical resize +2<CR>", { noremap = true, silent = true })
 
 -- Tabs
-keymap("n", "<leader>tr", function()
+vim.keymap.set("n", "<leader>Tn", function()
   local new_name = vim.fn.input("Tab name: ")
   if new_name ~= "" then
     vim.t.tab_name = new_name
@@ -115,28 +83,14 @@ keymap("n", "<leader>tr", function()
   end
 end, { desc = "Rename Tab" })
 
--- mini.pick
-keymap("n", "<leader><leader>", "<Cmd>Pick buffers<CR>", { desc = "[ ] Find existing buffers" })
-keymap("n", "<leader>ff", "<Cmd>Pick files<CR>", { desc = "[F]Find [F]iles" })
-keymap("n", "<leader>fg", "<Cmd>Pick grep_live<CR>", { desc = "[F]ind using [G]rep in current project" })
-keymap("n", "<leader>fw", "<Cmd>Pick grep pattern='<cword>'<CR>", { desc = "Grep Words under cursor" })
-keymap("v", "<leader>fw", "<Cmd>Pick grep pattern='<cword>'<CR>", { desc = "Grep Words selected using Visual Mode" })
+vim.keymap.set("n", "<leader>oa", function()
+  require("orgmode").action("agenda.prompt")
+end, { desc = "Org Agenda" })
+vim.keymap.set("n", "<leader>oc", function()
+  require("orgmode").action("capture.prompt")
+end, { desc = "Org Capture" })
 
-local grep_buffer = function()
-  local current_file = vim.fn.expand("%:p") -- Get absolute path of current file
-  if current_file == "" then
-    vim.notify("Buffer has no file name", vim.log.levels.WARN)
-    return
-  end
-
-  -- We call grep_live and pass the file path as an extra argument
-  MiniPick.builtin.grep_live({
-    tool = "rg", -- ensures we're using ripgrep
-    args = { current_file },
-  }, {
-    source = { name = "Grep Buffer" },
-  })
-end
-
--- Example Keymap
-keymap("n", "<leader>/", grep_buffer, { desc = "Grep current buffer" })
+-- Quickfix list
+vim.keymap.set("n", "<leader>qo", ":copen<CR>", { desc = "Quickfix - Open" })
+vim.keymap.set("n", "<leader>qq", ":cclose<CR>", { desc = "Quickfix - close" })
+vim.keymap.set("n", "<leader>qc", ":call setqflist([])<CR>", { desc = "Clear Quickfix" })

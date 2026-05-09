@@ -1,5 +1,6 @@
 tap "homebrew/bundle"
 tap "homebrew/services"
+tap "hashicorp/tap"
 brew "freetype"
 brew "fontconfig"
 brew "age"
@@ -56,7 +57,7 @@ brew "ruff"
 brew "rustup"
 brew "socat"
 brew "stow"
-brew "tofu"
+brew "opentofu"
 brew "terraform"
 brew "terraform-ls"
 brew "terraform-docs"
@@ -67,7 +68,6 @@ brew "typescript-language-server"
 brew "uv"
 brew "yaml-language-server"
 brew "yazi"
-brew "youtube-dl"
 brew "yq"
 brew "zellij"
 brew "zoxide"
@@ -85,16 +85,27 @@ cask "obsidian"
 cask "sanesidebuttons"
 cask "scroll-reverser"
 cask "sloth"
-cask "texmaker"
-cask "texshop"
 cask "vagrant"
 cask "visual-studio-code"
 cask "wezterm"
-mas "2FAS - Two Factor Authentication", id: 6443941139
-mas "Amphetamine", id: 937984704
-mas "Bitwarden", id: 1352778147
-mas "Infuse", id: 1136220934
-mas "Numbers", id: 409203825
-mas "OneTab", id: 1540160809
-mas "Streaks", id: 963034692
-mas "uBlock Origin Lite", id: 6745342698
+# mas "2FAS - Two Factor Authentication", id: 6443941139
+# mas "Infuse", id: 1136220934
+# mas "OneTab", id: 1540160809
+# mas "Streaks", id: 963034692
+# mas "uBlock Origin Lite", id: 6745342698
+brew "direnv"
+brew "pnpm"
+brew "pi-coding-agent"
+brew "btop"
+cask "windsurf"
+cask "coteditor"
+cask "slack"
+cask "google-chrome"
+cask "firefox"
+cask "keepassxc"
+cask "maccy"
+cask "keepingyouawake"
+cask "gcloud-cli"
+cask "localsend"
+cask "zed"
+cask "bitwarden"

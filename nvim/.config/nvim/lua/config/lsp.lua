@@ -1,6 +1,25 @@
 -- Diagnostic Configs
 local signs = { Error = " ", Warn = " ", Hint = " ", Information = " " }
 
+-- List of language servers to enable
+local servers = {
+  "basedpyright",
+  "bashls",
+  "cue",
+  "golangci_lint_ls",
+  "gopls",
+  "helm_ls",
+  "lua_ls",
+  "ruff",
+  "rust_analyzer",
+  "tofu_ls",
+  "tflint",
+  "ts_ls",
+  "yamlls",
+}
+
+vim.lsp.enable(servers)
+
 vim.diagnostic.config({
   float = {
     border = "rounded",
@@ -58,17 +77,111 @@ vim.lsp.config("*", {
 local servers = {
   "bashls",
   "cue",
-  -- "golangci_lint_ls",
+  "golangci_lint_ls",
   "gopls",
   "helm_ls",
   "lua_ls",
-  "pyrefly",
-  -- "ruff",
+  "ruff",
   "rust_analyzer",
   "tofu_ls",
-  -- "tflint",
+  "tflint",
   "ts_ls",
   "yamlls",
 }
 
-vim.lsp.enable(servers)
+-- Buffer variable cleanup on delete
+vim.api.nvim_create_autocmd("BufDelete", {
+  group = vim.api.nvim_create_augroup("LspBufferCleanup", { clear = true }),
+  callback = function(event)
+    pcall(function()
+      vim.b[event.buf].lsp_inlay_keymap_set = nil
+    end)
+    pcall(function()
+      vim.b[event.buf].lsp_codelens_keymap_set = nil
+    end)
+  end,
+})
+
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = LspAttachGroup,
+  callback = function(event)
+    local client = vim.lsp.get_client_by_id(event.data.client_id)
+    if not client then
+      return
+    end
+
+    -- Inlay hints: off by default; toggle with <leader>ih
+    if client:supports_method("textDocument/inlayHint") then
+      vim.lsp.inlay_hint.enable(false, { bufnr = event.buf })
+
+      if not vim.b[event.buf].lsp_inlay_keymap_set then
+        vim.keymap.set("n", "<leader>ih", function()
+          vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }), { bufnr = event.buf })
+        end, { desc = "Toggle Inlay Hints", buffer = event.buf })
+        vim.b[event.buf].lsp_inlay_keymap_set = true
+      end
+    end
+
+    -- Document symbols as breadcrumbs in statusline
+    if client:supports_method("textDocument/documentSymbol") then
+      require("nvim-navic").attach(client, event.buf)
+    end
+
+    -- Trigger codelens manually
+    if client:supports_method("textDocument/codeLens") then
+      if not vim.b[event.buf].lsp_codelens_keymap_set then
+        vim.keymap.set("n", "<leader>cl", function()
+          vim.lsp.codelens.enable(true, { bufnr = event.buf })
+        end, { desc = "Refresh CodeLens", buffer = event.buf })
+        vim.b[event.buf].lsp_codelens_keymap_set = true
+      end
+    end
+
+    -- Disable semantic tokens for large files
+    if vim.api.nvim_buf_line_count(event.buf) > 5000 then
+      vim.lsp.semantic_tokens.enable(false, { bufnr = event.buf, client_id = client.id })
+    end
+  end,
+})
+
+-- Do cleanup when LspDetach event occurs
+vim.api.nvim_create_autocmd("LspDetach", {
+  group = vim.api.nvim_create_augroup("LspDetach", { clear = true }),
+  callback = function(event)
+    vim.lsp.buf.clear_references()
+
+    local remaining_clients = vim.lsp.get_clients({ bufnr = event.buf })
+    if #remaining_clients == 0 then
+      pcall(vim.lsp.inlay_hint.enable, false, { bufnr = event.buf })
+      -- Clean up buffer-local keymap tracking variables
+      vim.b[event.buf].lsp_inlay_keymap_set = nil
+      vim.b[event.buf].lsp_codelens_keymap_set = nil
+    end
+  end,
+})
+
+-- LSP exit diagnostics: surface unexpected exits so we can identify which
+-- server is crashing instead of silently disappearing.
+vim.api.nvim_create_autocmd("LspDetach", {
+  group = vim.api.nvim_create_augroup("LspExitDiagnostics", { clear = true }),
+  callback = function(event)
+    local client = vim.lsp.get_client_by_id(event.data.client_id)
+    if not client then
+      return
+    end
+    -- Defer until the client has a chance to record an exit code.
+    vim.defer_fn(function()
+      -- Only complain about *abnormal* exits.
+      if client.is_stopped() and (client.exit_code or 0) ~= 0 then
+        vim.notify(
+          ("[lsp] %s exited with code %s (signal %s)"):format(
+            client.name,
+            tostring(client.exit_code),
+            tostring(client.signal or "none")
+          ),
+          vim.log.levels.WARN
+        )
+      end
+    end, 200)
+  end,
+})
